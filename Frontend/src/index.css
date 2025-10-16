@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+@keyframes gradient-x {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 400% 400%;
+  animation: gradient-x 5s ease infinite;
+}
+
+.loader {
+  border: 15px solid #e5e7eb;
+  border-top: 15px solid #22c55e;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width : 600px) {
+
+  .loader {
+    width: 60px;
+    height: 60px;
+    border: 10px solid #e5e7eb;
+    border-top: 10px solid #22c55e;
+
+  }
+}
