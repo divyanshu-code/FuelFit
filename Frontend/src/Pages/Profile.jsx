@@ -1,14 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { motion } from 'framer-motion';
-import { storedata } from '../../Context/DataContext'; 
+import { storedata } from '../../Context/DataContext';
 import { toast, Zoom } from 'react-toastify';
-import { FaUserCircle } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import { MdWc } from "react-icons/md";
-import { MdFitnessCenter } from "react-icons/md";
-import { GiBodyHeight } from "react-icons/gi";
-import { PiArmchairBold } from "react-icons/pi";
+import ProfileNavbar from '../Components/ProfileNavbar';
+import ProfileBanner from '../Components/ProfileBanner';
 
 const Profile = () => {
   const { url } = useContext(storedata);
@@ -18,13 +13,13 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      try {        
-        const response = await axios.get( `${url}/profile/userdata/${userId}`, {
+      try {
+        const response = await axios.get(`${url}/profile/userdata/${userId}`, {
           headers: {
             Authorization: `bearer ${token}`,
           }
         });
-        
+
         if (response.data.success) {
           setUser(response.data.user);
         }
@@ -41,7 +36,7 @@ const Profile = () => {
   }, [url]);
 
   if (!User) {
-    return  null;
+    return null;
   }
 
   const heightInMeters = User.height / 100;
@@ -49,15 +44,22 @@ const Profile = () => {
 
   const bmiStatus =
     bmi < 18.5 ? 'Underweight' :
-    bmi < 25 ? 'Normal' :
-    bmi < 30 ? 'Overweight' : 'Obese';
+      bmi < 25 ? 'Normal' :
+        bmi < 30 ? 'Overweight' : 'Obese';
 
   return (
-     <>
-      <div className=''>
+    <>
 
-      </div>
-     </>
+        <div className="bg-gradient-to-b from-green-100 to-white min-h-screen ">
+
+          <ProfileNavbar user={User}/>
+
+          <ProfileBanner user={User} bmi={bmi} bmiStatus={bmiStatus} />
+
+          
+        </div>
+
+    </>
   );
 };
 

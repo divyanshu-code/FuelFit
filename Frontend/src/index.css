@@ -62,3 +62,70 @@ body {
 
   }
 }
+
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(40deg);
+  }
+
+  20% {
+    transform: rotate(-20deg);
+  }
+
+  30% {
+    transform: rotate(40deg);
+  }
+
+  40% {
+    transform: rotate(-20deg);
+  }
+
+  50% {
+    transform: rotate(40deg);
+  }
+
+  60% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.wave {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: wave 2s infinite;
+}
+
+@keyframes moveText {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.scroll-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: moveText 15s linear infinite;
+}
+
+.parrent:hover .child {
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 30px;
+  border-radius: 4px;
+  color: rgb(64, 64, 64);
+
+}

@@ -2,7 +2,6 @@ import React from 'react'
 import logo from '../assets/FuelFit.png'
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
-import { Link } from 'react-router-dom';
 
 const Navbar = ({ setlogin }) => {
     const [isOpen, setIsOpen] = React.useState(false);
