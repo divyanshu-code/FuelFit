@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 export const verifyToken = (req, res, next) => {
-    const token = req.header('Authorization')?.replace('bearer ', '');     // Expect: "Bearer <token>"
+    const token = req.header('Authorization')?.replace('bearer ', '');     // Expect: "bearer <token>"
 
     if (!token) {
         return res.status(401).json({ success: false, message: 'Access denied. No token provided.' });

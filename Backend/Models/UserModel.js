@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema({
   hasFitnessDetails: {
     type: Boolean,
     default: false
+  },
+  profileImage: { 
+    type: String, 
+    default: "" 
   }
 
 }, { minimize: false });

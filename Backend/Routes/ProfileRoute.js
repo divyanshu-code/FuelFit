@@ -1,10 +1,19 @@
 import express from 'express'
-import { profile } from '../Controllers/ProfileController.js';
+import { profile , uploadprofile } from '../Controllers/ProfileController.js';
 import { verifyToken } from '../MiddleWare/authMiddleware.js';
+import multer from 'multer'
 
 const profileRouter = express.Router();
 
-profileRouter.get('/userdata/:id',verifyToken ,profile )
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, "uploads"),
+  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
+});
+
+const upload = multer({ storage });
+
+profileRouter.get('/userdata/:id',verifyToken ,profile)
+profileRouter.post('/upload/:userId' , verifyToken  , upload.single("profileImage") , uploadprofile)
 
 
 export default profileRouter;
