@@ -114,9 +114,8 @@ body {
 }
 
 .scroll-text {
-  display: inline-block;
-  white-space: nowrap;
-  animation: moveText 15s linear infinite;
+   display: flex;
+  animation: moveText 20s linear infinite;
 }
 
 .parrent:hover .child {

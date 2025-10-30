@@ -4,6 +4,8 @@ import { storedata } from '../../Context/DataContext';
 import { toast, Zoom } from 'react-toastify';
 import ProfileNavbar from '../Components/ProfileNavbar';
 import ProfileBanner from '../Components/ProfileBanner';
+import Nutrition from '../Components/Nutrition';
+import BMI from '../Components/BMI';
 
 const Profile = () => {
   const { url } = useContext(storedata);
@@ -50,13 +52,16 @@ const Profile = () => {
   return (
     <>
 
-        <div className="bg-gradient-to-b from-green-100 to-white min-h-screen ">
+        <div className="bg-gradient-to-b from-green-200 to-green-50 min-h-screen ">
 
           <ProfileNavbar user={User}/>
 
           <ProfileBanner user={User} bmi={bmi} bmiStatus={bmiStatus} />
 
-          
+
+          <Nutrition/>
+
+          <BMI/>
         </div>
 
     </>

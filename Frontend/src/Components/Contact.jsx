@@ -76,7 +76,7 @@ const Footer = ({ setlogin }) => {
   }, [openFeedback]);
 
   return (
-    <footer className="bg-green-800   text-white py-12 px-6 md:px-16" id="contact">
+    <footer className="bg-green-800  text-white py-12 px-6 md:px-16" id="contact">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-20">
 
         <div className="md:w-1/3 text-center lg:text-left">

@@ -71,7 +71,7 @@ const ProfileNavbar = ({ user }) => {
     }
     return (
         <>
-            <div className='fixed top-0 rounded-md px-5 py-2 mx-[15vw] my-3 border shadow-lg border-white bg-white lg:w-[70vw]  '>
+            <div className='fixed top-0 rounded-md px-5 py-2 mx-[15vw] my-3 z-50 border shadow-lg border-white bg-white lg:w-[70vw]  '>
                 <div className='flex justify-between items-center'>
                     <a href="#home">
                         <img className="lg:w-36 w-36  cursor-pointer" src={logo} alt="FuelFit" />
@@ -80,8 +80,8 @@ const ProfileNavbar = ({ user }) => {
                     <ul className="hidden md:flex gap-10 font-light text-md">
                         <li><a href="#nutrition" className=" hover:text-green-500">Nutrition</a></li>
                         <li><a href="#bmi" className="hover:text-green-500">BMI</a></li>
-                        <li><a href="#calories" className="hover:text-green-500">Calories</a></li>
                         <li><a href="#blog" className="hover:text-green-500">Blog</a></li>
+                        <li><a href="#contact" className="hover:text-green-500">Contact Us</a></li>
                     </ul>
 
                     <div className="parrent relative">

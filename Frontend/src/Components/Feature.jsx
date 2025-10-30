@@ -12,7 +12,7 @@ const Features = () => {
   ];
 
   return (
-    <section id="feature" className=" lg:mt-0 mt-60 bg-gradient-to-b from-white to-green-100 text-gray-800 py-20 px-6 md:px-16">
+    <section id="feature" className=" lg:mt-0 lg:h-[140vh] h-[320vh] mt-60 bg-gradient-to-b from-white to-green-100 text-gray-800 py-20 px-6 md:px-16">
       <div className="max-w-7xl mt-15 mx-auto  text-center ">
         <motion.h2
           className="lg:text-4xl text-3xl font-bold text-green-600"

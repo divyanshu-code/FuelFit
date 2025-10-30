@@ -4,10 +4,10 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 const ProfileBanner = ({ user, bmi, bmiStatus }) => {
     return (
         <>
-            <section className=" h-[80vh] flex w-full overflow-hidden p-5 ">
+            <section className=" h-[80vh] flex w-full  p-5 " id="home">
 
                 <motion.div
-                    className=" z-10 flex flex-col  mt-20 justify-center h-full  text-black  lg:px-60"
+                    className=" flex flex-col  mt-20 justify-center h-full  text-black  lg:px-60"
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
@@ -17,7 +17,7 @@ const ProfileBanner = ({ user, bmi, bmiStatus }) => {
                         Your fitness story — progress, persistence, and performance in one place.
                     </p>
 
-                    <div className="bg-white  backdrop-blur-lg rounded-lg w-80 px-6 py-4 flex flex-col gap-5  text-center shadow-lg">
+                    <div className="bg-white  rounded-lg w-80 px-6 py-4 flex flex-col gap-5  text-center shadow-lg">
                         <p>🧍‍♂️Weight: <span className="font-semibold">{user.weight} kg</span></p>
                         <p>📏Height: <span className="font-semibold">{user.height} cm</span></p>
                         <p>⚖️ BMI: <span className="font-semibold">{bmi}</span> ({bmiStatus})</p>
@@ -41,10 +41,10 @@ const ProfileBanner = ({ user, bmi, bmiStatus }) => {
             </section>
 
             <div className="w-full lg:px-50 mt-5  ">
-                <div className="overflow-hidden bg-emerald-200 py-5 rounded-lg shadow-xl">
-                    <p className="scroll-text  p-2 text-lg rounded text-black  font-semibold">
-                        <pre> 1% better every day.       keep pushing your limits!      stay consistent and complete your goals.</pre>
-                    </p>
+                <div className="overflow-hidden  py-5 ">
+                    <div className="scroll-text gap-20 p-2 text-lg rounded text-black  font-semibold">
+                         <h1>1% better every day.</h1>      <h1>keep pushing your limits!</h1>     <h1>stay consistent and complete your goals.</h1>
+                    </div>
 
                 </div>
 
