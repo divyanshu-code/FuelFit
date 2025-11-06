@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-
   },
   email: {
     type: String,
@@ -41,12 +40,17 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  profileImage: { 
-    type: String, 
-    default: "" 
+  profileImage: {
+    type: String,
+    default: ""
+  },
+  mealtype: {
+    type: String,
+    enum: ["Veg", "Non-veg", "Both"],
+    default: null
   }
 
-}, { minimize: false });
+}, { minimize: false , timestamps: true});
 
 
 const userModel = mongoose.models.user || mongoose.model("user", userSchema)

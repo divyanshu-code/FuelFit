@@ -78,7 +78,7 @@ const login = async (req, res) => {
 
 const fitnessdetail = async (req, res) => {
 
-    const { userId, age, height, weight, fitnessGoal , gender } = req.body;
+    const { userId, age, height, weight, fitnessGoal , gender ,mealtype } = req.body;
 
     if (!userId) {
         return res.status(400).json({ success: false, message: "User ID is required." });
@@ -106,7 +106,8 @@ const fitnessdetail = async (req, res) => {
                 weight,
                 fitnessGoal,
                 gender,
-                hasFitnessDetails: true
+                hasFitnessDetails: true,
+                mealtype
             },
             { new: true }
         );
