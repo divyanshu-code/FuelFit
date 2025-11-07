@@ -11,7 +11,7 @@ const getuserdata = async (req, res) => {
     const user = await userModel.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    let todayData = await mealModel.findOne({ userId, date: today });
+    let todayData = await mealModel.findOne({ userId, date: today });    
 
     if (!todayData) {
 
