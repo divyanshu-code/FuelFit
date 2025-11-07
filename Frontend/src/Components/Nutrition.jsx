@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {
     BarChart,
     Bar,
@@ -34,9 +33,7 @@ const Nutrition = () => {
                 )}`
             );
 
-            const data = await res.json(); // ✅ Fetch needs this
-
-            console.log(data);
+            const data = await res.json(); // Fetch needs this to parse JSON
 
             const nutrients = data.ingredients?.[0]?.parsed?.[0]?.nutrients;
             if (!nutrients) {

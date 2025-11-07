@@ -37,7 +37,7 @@ const Features = () => {
         {features.map((feature, index) => (
           <motion.div
             key={index}
-            className="bg-green-50 p-8 rounded-xl shadow-xl  hover:shadow-lg transition-all duration-300"
+            className="bg-green-50 p-8 rounded-xl shadow-xl hover:shadow-lg transition-all duration-300"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.1 }}

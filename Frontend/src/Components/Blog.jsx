@@ -45,7 +45,7 @@ const blogs = [
       "https://www.lifecoachcode.com/wp-content/uploads/2024/05/Unveiling-the-Vital-Role-of-Micronutrients-in-Supporting-Optimal-Health-All-You-Need-to-Know.png",
     description:
       "Micronutrients like iron, calcium, and vitamin D may be required in small amounts, but they have a huge impact on energy levels, bone strength, and immunity.",
-    Link:"https://myhealthmeter.com/blog/details/micro-nutrients-deficiency"
+    Link: "https://myhealthmeter.com/blog/details/micro-nutrients-deficiency"
   },
   {
     id: 6,
@@ -54,7 +54,7 @@ const blogs = [
       "https://i.pinimg.com/1200x/df/87/52/df8752cfdaeb689633f2ae0d5f5b94de.jpg",
     description:
       "Proteins are the main building blocks of your body. They’re used to make muscle, organs, and skin, as well as enzymes, hormones. Do you know how much protein you need daily?",
-    Link:"https://www.healthline.com/nutrition/how-much-protein-per-day"
+    Link: "https://www.healthline.com/nutrition/how-much-protein-per-day"
   },
   {
     id: 7,
@@ -63,7 +63,7 @@ const blogs = [
       "https://i.pinimg.com/736x/b8/38/8b/b8388b0891ce2db7bf274d88e4b4e67a.jpg",
     description:
       "Calorie denotes a unit of energy that you derive from the food and drinks you consume and the amount of energy you use to perform various physical activities.",
-    Link:"https://www.apollohospitals.com/diseases-and-conditions/how-much-calories-do-i-need-per-day"
+    Link: "https://www.apollohospitals.com/diseases-and-conditions/how-much-calories-do-i-need-per-day"
   },
 
 ];
@@ -71,7 +71,7 @@ const blogs = [
 const Blog = () => {
   return (
     <div
-      className="h-[70vh] bg-green-400 py-5 px-15 m-25 mx-40 rounded-lg  overflow-hidden"
+      className="h-[70vh] scroll-mt-35 mb-60 bg-green-400 py-5 px-15 m-25 mx-40 rounded-lg  overflow-hidden"
       id="blog"
     >
       <h1 className="text-3xl md:text-2xl font-serif font-bold text-shadow-white text-black mb-10">

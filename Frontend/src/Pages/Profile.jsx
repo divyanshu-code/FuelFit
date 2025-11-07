@@ -7,6 +7,7 @@ import ProfileBanner from '../Components/ProfileBanner';
 import Nutrition from '../Components/Nutrition';
 import BMI from '../Components/BMI';
 import Blog from '../Components/Blog';
+import Help from '../Components/Help';
 
 const Profile = () => {
   const { url } = useContext(storedata);
@@ -65,6 +66,8 @@ const Profile = () => {
           <BMI/>
 
           <Blog/>
+
+          <Help/>
         </div>
 
     </>

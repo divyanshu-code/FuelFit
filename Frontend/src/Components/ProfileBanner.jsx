@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { Link } from "react-router-dom";
 
 const ProfileBanner = ({ user, bmi, bmiStatus }) => {
     return (
@@ -12,23 +13,24 @@ const ProfileBanner = ({ user, bmi, bmiStatus }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h1 className="text-2xl  font-semibold italic mb-1">Welcome,  {user.name} <span className="wave">👋 </span></h1>
+                    <h1 className="text-2xl  font-semibold italic mb-1">Welcome, {user.name} <span className="wave">👋 </span></h1>
                     <p className="text-md mb-6 leading-relaxed ">
                         Your fitness story — progress, persistence, and performance in one place.
                     </p>
 
-                    <div className="bg-white  rounded-lg w-80 px-6 py-4 flex flex-col gap-5  text-center shadow-lg">
+                    <div className="bg-white  rounded-lg w-80 px-6 py-4 flex flex-col gap-3  text-center shadow-lg">
                         <p>🧍‍♂️Weight: <span className="font-semibold">{user.weight} kg</span></p>
                         <p>📏Height: <span className="font-semibold">{user.height} cm</span></p>
                         <p>⚖️ BMI: <span className="font-semibold">{bmi}</span> ({bmiStatus})</p>
-
+                        <p>🍽️ Meal Type: <span className="font-semibold">{user.mealtype}</span></p>
+                        <p>🏋️‍♂️ Fitness Goal: <span className="font-semibold">{user.fitnessGoal}</span></p>
                     </div>
 
                     <div className="mt-6 flex gap-4">
 
-                        <button className="bg-blue-500 border border-white px-5 py-2 rounded-full font-medium hover:bg-blue-600 cursor-pointer text-white transition">
+                        <Link to="/progress" className=" inline-block bg-blue-500 border border-white px-5 py-2 rounded-full font-medium hover:bg-blue-600 cursor-pointer text-white transition">
                             View Progress
-                        </button>
+                        </Link>
                     </div>
                 </motion.div>
 

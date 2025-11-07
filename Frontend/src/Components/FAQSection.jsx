@@ -36,7 +36,7 @@ const faqs = [
   },
   {
     question: "Do I need an account to use FuelFit?",
-    answer: "You can explore some features without signing up, but creating an account helps save your progress and personalize your experience."
+    answer: "yes , creating an account helps save your progress and personalize your experience."
   },
   {
     question: "Can I share my meal plan with my trainer or friends?",

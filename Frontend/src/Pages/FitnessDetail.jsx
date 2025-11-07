@@ -38,7 +38,7 @@ const FitnessDetail = () => {
 
         e.preventDefault();
 
-         setLoading(true);
+        setLoading(true);
         try {
 
             const response = await axios.post(url + '/user/details', form, {
@@ -68,14 +68,15 @@ const FitnessDetail = () => {
                 weight: '',
                 fitnessGoal: '',
                 gender: '',
+                mealtype: '',
             });
 
-             setTimeout(() => {
-                 navigate('/profile');
-             }, 2000);
-            
+            setTimeout(() => {
+                navigate('/profile');
+            }, 2000);
+
         } catch (error) {
-            
+
             const errorMessage = error.response?.data?.message || 'Something went wrong!';
             toast.error(errorMessage, {
                 position: "top-right",
@@ -88,7 +89,7 @@ const FitnessDetail = () => {
                 theme: "colored",
                 transition: Zoom,
             });
-        }finally {
+        } finally {
             setTimeout(() => setLoading(false), 2000);
         }
     };
@@ -107,24 +108,32 @@ const FitnessDetail = () => {
     }
     return (
         <>
-            { loading && <Loader/>}
+            {loading && <Loader />}
             < div className="relative flex justify-center items-center min-h-screen overflow-hidden bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 animate-gradient-x">
 
                 <div className="absolute inset-0 bg-black/20"></div>
                 <motion.form onSubmit={handleSubmit} className="relative z-10 bg-gradient-to-b m-5 from-white to-green-100 shadow-2xl rounded px-6 py-6 lg:w-96 w-full max-w-sm sm:max-w-md md:max-w-lg"
-                    initial={{ opacity: 0, y: 200 }}      
-                    animate={{ opacity: 1, y: 0 }}       
-                    exit={{ opacity: 0, y: -200 }}       
+                    initial={{ opacity: 0, y: 200 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -200 }}
                     transition={{ duration: 1, ease: "easeOut" }}
                 >
                     <RxCross2 className="absolute top-4 right-4 cursor-pointer" size={20} onClick={() => { logout() }} />
                     <h2 className="text-xl bg-gradient-to-r from-green-700 to-green-500   bg-clip-text text-transparent  font-bold mb-3 italic text-center ">Your Fitness Details</h2>
 
-                    <input name="name" value={form.name} onChange={handleChange} placeholder="Name" className="border-b text-sm border-green-500 mb-5 p-1 w-full outline-none" required />
-                    <input name="age" value={form.age} onChange={handleChange} placeholder="Age" className="border-b text-sm border-green-500 mb-5 p-1 w-full outline-none" required />
+                    <input type='text' name="name" value={form.name} onChange={handleChange} placeholder="Name" className="border-b text-sm border-green-500 mb-5 p-1 w-full outline-none" required />
                     <div className='flex items-center gap-4'>
-                        <input name="height" value={form.height} onChange={handleChange} placeholder="Height (cm)" className="border-b text-sm border-green-500 mb-5 lg:w-40 w-32 p-1 outline-none" required />
-                        <input name="weight" value={form.weight} onChange={handleChange} placeholder="Weight (kg)" className="border-b text-sm border-green-500 mb-5 lg:w-40 w-32 p-1 outline-none" required />
+                        <input name="age" type='number' value={form.age} onChange={handleChange} placeholder="Age" className="border-b text-sm border-green-500 mb-5 p-1 lg:w-40 w-32 outline-none" required />
+                        <select name="mealtype" value={form.mealtype} onChange={handleChange} className="border-b cursor-pointer text-sm border-green-500 mb-5 p-1 lg:w-40 w-32 outline-none" required>
+                            <option value="">Meal Type</option>
+                            <option value="Veg">Veg</option>
+                            <option value="Non-veg">Non-Veg</option>
+                            <option value="Both">Both</option>
+                        </select>
+                    </div>
+                    <div className='flex items-center gap-4'>
+                        <input name="height" type='number' value={form.height} onChange={handleChange} placeholder="Height (cm)" className="border-b text-sm border-green-500 mb-5 lg:w-40 w-32 p-1 outline-none" required />
+                        <input name="weight" type='number' value={form.weight} onChange={handleChange} placeholder="Weight (kg)" className="border-b text-sm border-green-500 mb-5 lg:w-40 w-32 p-1 outline-none" required />
 
                     </div>
 
@@ -146,6 +155,7 @@ const FitnessDetail = () => {
                         </select>
 
                     </div>
+
 
                     <button type="submit" className="bg-green-500 w-full cursor-pointer hover:bg-green-600 text-white font-semibold p-2 rounded ">Continue</button>
                 </motion.form>

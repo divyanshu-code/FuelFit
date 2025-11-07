@@ -76,13 +76,13 @@ const Footer = ({ setlogin }) => {
   }, [openFeedback]);
 
   return (
-    <footer className="bg-green-800  text-white py-12 px-6 md:px-16" id="contact">
+    <footer className="bg-green-800 text-white py-12 px-6 md:px-16" id="contact">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-20">
 
         <div className="md:w-1/3 text-center lg:text-left">
-          <a href="#home" className="inline-block w-40 h-16  "><img src={logo} alt="FuelFit Logo" /></a>
+          <a href="#home" className="inline-block w-40 h-16"><img src={logo} alt="FuelFit Logo" /></a>
           <p className="text-gray-100 ml-2 italic leading-tight">
-            <span className="font-semibold font-mono ">Welcome to FuelFit!</span>   <br />
+            <span className="font-semibold font-mono ">Welcome to FuelFit!</span>  <br />
             Your personal guide to healthy eating and smart fitness. Plan meals, track progress, and stay fit.
           </p>
         </div>
@@ -114,7 +114,7 @@ const Footer = ({ setlogin }) => {
 
           <div onClick={() => {
             setOpenFAQ(true);
-          }} className="fixed lg:bottom-6 right-5 bottom-9 lg:right-15 lg:w-12 lg:h-12 w-11 h-11 bg-green-600 rounded-full flex items-center justify-center  hover:bg-green-500 cursor-pointer transition-colors" >
+          }} className="fixed lg:bottom-6 right-5 bottom-9 lg:right-15 lg:w-12 lg:h-12 w-11 h-11 bg-green-600 rounded-full flex items-center justify-center  hover:bg-green-500 cursor-pointer transition-colors">
             <img src="https://png.pngtree.com/png-vector/20220607/ourmid/pngtree-faq-icon-on-white-background-png-image_4915284.png" alt="" />
           </div>
 

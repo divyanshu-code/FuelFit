@@ -81,7 +81,7 @@ const ProfileNavbar = ({ user }) => {
                         <li><a href="#nutrition" className=" hover:text-green-500">Nutrition</a></li>
                         <li><a href="#bmi" className="hover:text-green-500">BMI</a></li>
                         <li><a href="#blog" className="hover:text-green-500">Blog</a></li>
-                        <li><a href="#contact" className="hover:text-green-500">Contact Us</a></li>
+                        <li><a href="#help" className="hover:text-green-500">Help</a></li>
                     </ul>
 
                     <div className="parrent relative">

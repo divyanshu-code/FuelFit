@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from './Components/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import Home from './Components/Home'
 import About from './Components/About'
@@ -11,8 +10,8 @@ import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FitnessDetail from './Pages/FitnessDetail'
 import ProtectedRoute from './ProtectedRoute/ProtectRoute'
-import { AnimatePresence } from 'framer-motion'
 import Profile from './Pages/Profile'
+import Dashboard from './Components/Dashboard'
 
 const App = () => {
 
@@ -49,6 +48,12 @@ const App = () => {
           <ProtectedRoute>
             <Profile />
           </ProtectedRoute>}/>
+
+        <Route path='/progress' element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>} />
+
       </Routes>
 
     </>
