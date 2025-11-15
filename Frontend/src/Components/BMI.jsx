@@ -60,7 +60,7 @@ const BMI = () => {
             </p>
 
             <motion.div
-                className="bg-white p-8 rounded shadow-lg max-w-md w-full"
+                className="bg-white p-8 rounded-md shadow-lg max-w-md w-full"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
             >

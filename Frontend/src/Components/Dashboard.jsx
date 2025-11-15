@@ -15,6 +15,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -22,6 +23,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [progressHistory, setProgressHistory] = useState([]);
+  const [streak, setStreak] = useState(0);
+  const [maxStreak, setMaxStreak] = useState(0);
+  const [exercises, setExercises] = useState([]);
+
   const token = localStorage.getItem("tokens");
   const userId = localStorage.getItem("userId");
 
@@ -36,6 +41,14 @@ const Dashboard = () => {
       setUser(res.data.user);
 
       setTodayData(res.data.todayData);
+
+      setProgressHistory(res.data.progressHistory);
+
+      setStreak(res.data.streak);
+
+      setMaxStreak(res.data.maxi);
+
+
     } catch (err) {
       console.error("Error fetching user data:", err);
     } finally {
@@ -44,9 +57,22 @@ const Dashboard = () => {
     }
   };
 
+  const fetchExercises = async () => {
+    try {
+      const res = await axios.get(url + `/dashboard/exercise/${user.fitnessGoal}`);
+      setExercises(res.data.exercises);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   useEffect(() => {
     fetchUserData();
-  }, []);
+    if (user?.fitnessGoal) fetchExercises();
+
+    localStorage.setItem('fitnessGoal', user?.fitnessGoal || '');
+  }, [user?.fitnessGoal]);
 
 
   const handleMealComplete = async (mealId, nutrition) => {
@@ -63,59 +89,67 @@ const Dashboard = () => {
   };
 
 
-  useEffect(() => {
-    if (todayData) {
-      const today = new Date().toISOString().split("T")[0];
-      const updatedHistory = [
-        ...progressHistory.filter((d) => d.date !== today),
-        {
-          date: today,
-          completed: todayData.completed || false,
-        },
-      ];
-
-      setProgressHistory(updatedHistory);
-    }
-  }, [todayData]);
-
-
   const tileContent = ({ date, view }) => {
 
-    if (view === "month") {
-      const day = date.toLocaleDateString("en-CA");
-      const progress = progressHistory.find((d) => d.date === day);
+    if (view !== "month") return null;
 
-      if (progress) {
-        return (
-          <div className="flex flex-col items-center justify-center"
-            style={{ lineHeight: "1", marginTop: "-15px" }}
-          >
+    const day = date.toLocaleDateString("en-CA");  
+    
+    const today = new Date().toLocaleDateString("en-CA");       
+    const progress = progressHistory.find((d) => d.date === day);
 
-            <span
-              style={{
-                fontSize: "1rem",
-                marginLeft: "1px",
-              }}
-            >
-              {progress.completed ? "✅" : "😫"}
-            </span>
+    // Don't show anything for future days
+    if (day > today) return null;
 
-            <div className="absolute hidden group-hover:flex flex-col items-center 
-              bg-gray-900 text-white text-xs px-2 py-1 rounded shadow-lg z-50 
-              top-43 left-1/2 -translate-x-1/2 whitespace-nowrap">
+    let showEmoji = "😢";                   
+    let statusText = "No Entry (Missed)";
 
-              <p>{day}</p>
-              <p>
-                Status:{" "}
-                {progress.completed ? "Completed 🔥" : "Not Completed 😔"}
-              </p>
-            </div>
-
-          </div>
-        );
+    // If record exists for that day
+    if (progress) {
+      if (progress.completed) {
+        showEmoji = "✅";
+        statusText = "Completed 🔥";
+      } else {
+        showEmoji = "😢";
+        statusText = "Not Completed 😔";
+      }
+    } else {
+      // Case 2: No record and it's a past day
+      const recordDates = progressHistory.map((d) => d.date);
+      if (!recordDates.includes(day) && day <= today) {
+        showEmoji = "😢";
+        statusText = "Missed 😔";
       }
     }
-    return null;
+
+ 
+    return (
+      <>
+      
+      <div
+        className="flex flex-col items-center justify-center relative group"
+        style={{ lineHeight: "1", marginTop: "-15px" }}
+      >
+        <span
+          style={{
+            fontSize: "1rem",
+            marginLeft: "1px",
+          }}
+        >
+          {showEmoji}
+        </span>
+
+      </div>
+        <div
+          className="absolute hidden group-hover:flex flex-col items-center 
+          bg-gray-900 text-white text-xs px-2 py-1 rounded shadow-lg z-50 
+          top-[20vh] whitespace-nowrap"
+        >
+          <p>{day}</p>
+          <p>Status: {statusText}</p>
+        </div>
+      </>
+    );
   };
 
   const data = [
@@ -131,24 +165,39 @@ const Dashboard = () => {
   return (
 
     <>
-      {loading && <Loader />}
+      {/* {loading && <Loader />} */}
       <div className="min-h-screen bg-gradient-to-b from-green-200 to-green-50 flex flex-col   ">
-        <div className="fixed top-0 rounded-md px-5 py-2 mx-[15vw] my-3 z-10 border shadow-lg border-white bg-green-100 lg:w-[70vw] ">
+        <div className="flex items-center justify-between fixed top-0 rounded-md px-5 py-2 w-[85vw] mx-[7.4vw] my-3 z-10 border shadow-lg border-white bg-green-100  ">
           <h1 className="text-2xl font-bold text-left px-10 py-3 ">
             Welcome ,Back <span className="text-green-500">{user?.name || "User"}</span> 👋
           </h1>
+
+          <Link to="/exercises" className="border border-blue-500 bg-blue-600 text-white lg:mr-10  px-8 py-2 rounded hover:bg-black cursor-pointer hover:border-black transition">View exercises chart</Link>
         </div>
 
-        <div className="fixed top-40  right-8 ">
+        <div className="fixed top-40  right-30 ">
+          <div className=" mb-3 bg-white px-6 py-3 rounded-lg  ">
+            <h2 className=" flex items-center gap-13 text-sm font-semibold text-gray-700">
+              <div>
+                Current Streak: <span className="text-green-500 text-lg">🔥{streak}</span>
+              </div>
+
+              <div>
+                Max Streak: <span className="text-green-500 text-lg">🔥{maxStreak}</span>
+              </div>
+            </h2>
+          </div>
+
           <Calendar
             value={selectedDate}
             onChange={setSelectedDate}
             tileContent={tileContent}
             tileClassName="group"
+            className="my-calendar"
           />
 
-          <div className="mt-4 flex text-sm items-center gap-10 text-center bg-white p-4 rounded-lg shadow-md">
-            <h1>✅  "Completed" </h1>
+          <div className="mt-4 flex text-sm items-center gap-20  font-semibold bg-white px-9 py-4 rounded-lg shadow-md">
+            <h1>✅ "Completed" </h1>
             <h1> 😫 "Missed"</h1>
 
           </div>
@@ -156,7 +205,7 @@ const Dashboard = () => {
 
 
 
-        <div className="mt-40 w-[66vw] mx-30 bg-white rounded-lg shadow-md  ">
+        <div className="mt-40 w-[60vw] mx-30 bg-white rounded-lg shadow-md  ">
           <h2 className="text-xl ml-17 mt-5 font-bold mb-4 text-gray-700">
             Daily Nutrition Summary
           </h2>
@@ -173,7 +222,7 @@ const Dashboard = () => {
         </div>
 
 
-        <div className="bg-gradient-to-b from-white mb-20 to-green-200 shadow-lg rounded-lg p-10  mt-20 w-[66vw] mx-30">
+        <div className="bg-gradient-to-b from-white mb-20 to-green-200 shadow-lg rounded-lg p-10  mt-20 w-[60vw] mx-30">
           <h2 className="text-2xl font-semibold mb-4 text-left">
             Today’s Meal
           </h2>
@@ -217,7 +266,38 @@ const Dashboard = () => {
           </div>
 
         </div>
+        <div className="mt-8 mx-30 mb-10 bg-gradient-to-b from-green-300 to-green-200 shadow-lg rounded-lg p-10  cursor-pointer w-[60vw]">
+          <h2 className="text-2xl italic font-bold mb-4">
+            Exercises Suggestion for {user?.fitnessGoal}
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 w-[55vw]  gap-8">
+            {exercises.map((ex, idx) => (
+              <div
+                key={idx}
+                className="p-4  rounded-lg bg-green-100 shadow-sm hover:shadow-lg transition"
+              >
+                <img
+                  src={ex.image}
+                  alt={ex.name}
+                  className="h-44 w-full object-cover rounded"
+                />
+
+                <h3 className="text-lg font-bold mt-2">{ex.name}</h3>
+
+                <div className="text-sm mt-1">
+                  {ex.sets && <p>Sets: {ex.sets}</p>}
+                  {ex.reps && <p>Reps: {ex.reps}</p>}
+                  {ex.duration && <p>Duration: {ex.duration}</p>}
+                  <p className=" text-gray-500 mt-1">Type: {ex.type}</p>
+
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
     </>
   );
 };

@@ -129,6 +129,26 @@ body {
 
 }
 
+.teacher {
+  position: relative;
+  display: inline-block;
+}
+
+.student {
+  position: absolute;
+  width: 50px;
+  top: 30px;
+  right: 15px;
+   text-align: center;
+  border-radius: 50%;
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+}
+
+.teacher:hover .student {
+  opacity: 1;
+}
+
 .blog-slider {
   position: relative;
   width: 100%;
@@ -184,4 +204,49 @@ body {
 
 .blog-track:hover {
   animation-play-state: paused;
+}
+
+
+.my-calendar {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  max-width: 380px;
+}
+
+.my-calendar .react-calendar__tile {
+  border-radius: 5px;
+  transition: 0.3s ease;
+ 
+}
+
+.my-calendar .react-calendar__tile--active {
+  background: #0057d8 !important;
+  color: white !important;
+  border-radius: 5px;
+  
+}
+
+.my-calendar .react-calendar__navigation button {
+  color: #333;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.my-calendar .react-calendar__navigation button:hover {
+  background: #f0f0f0;
+  border-radius: 5px;
+}
+
+.my-calendar .react-calendar__month-view__weekdays__weekday {
+  text-transform: uppercase;
+  font-weight: 800px;
+  font-size: 12px;
+}
+
+.my-calendar .react-calendar__tile--now {
+  background: #cdffdc;
 }

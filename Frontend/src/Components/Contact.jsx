@@ -108,7 +108,7 @@ const Footer = ({ setlogin }) => {
             <div>
               <MdFeedback onClick={() => {
                 setOpenFeedback(true);
-              }} size={30} className="text-black cursor-pointer" alt="Feedback" title="Feedback"/>
+              }} size={30} className="text-black cursor-pointer" alt="Feedback" title="Feedback" />
             </div>
           </div>
 
@@ -128,7 +128,7 @@ const Footer = ({ setlogin }) => {
         </div>
 
         {openFeedback && (
-          <div  ref={FeedbackRef}>
+          <div ref={FeedbackRef}>
             <Feedback Closeref={Closeref} setOpenFeedback={setOpenFeedback} />
           </div>
         )}

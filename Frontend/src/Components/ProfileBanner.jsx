@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const ProfileBanner = ({ user, bmi, bmiStatus }) => {
     return (
         <>
-            <section className=" h-[80vh] flex w-full  p-5 " id="home">
+            <section className="h-[80vh] flex w-full  p-5 " id="home">
 
                 <motion.div
                     className=" flex flex-col  mt-20 justify-center h-full  text-black  lg:px-60"

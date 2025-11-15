@@ -12,6 +12,8 @@ import FitnessDetail from './Pages/FitnessDetail'
 import ProtectedRoute from './ProtectedRoute/ProtectRoute'
 import Profile from './Pages/Profile'
 import Dashboard from './Components/Dashboard'
+import Excercise from './Components/Excercise'
+import ProfileSetting from './Pages/ProfileSetting'
 
 const App = () => {
 
@@ -52,6 +54,19 @@ const App = () => {
         <Route path='/progress' element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>} />
+
+        <Route path='/exercises' element={
+          <ProtectedRoute>
+           <Excercise />
+          </ProtectedRoute>} />
+
+        <Route path='/:username' element={
+          <ProtectedRoute>
+            <div className="bg-black  h-screen flex items-center justify-center">
+
+            <ProfileSetting/>
+            </div>
           </ProtectedRoute>} />
 
       </Routes>

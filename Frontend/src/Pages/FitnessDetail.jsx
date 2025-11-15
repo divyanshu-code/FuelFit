@@ -141,7 +141,7 @@ const FitnessDetail = () => {
 
                         <select name="fitnessGoal" value={form.goal} onChange={handleChange} className="border-b cursor-pointer text-sm border-green-500 mb-8 p-1 lg:w-40 w-32 outline-none" required>
                             <option value="">Select Goal</option>
-                            <option value="Fit">Stay Fit</option>
+                            <option value="Stay Fit">Stay Fit</option>
                             <option value="Muscle Gain">Muscle Gain</option>
                             <option value="Fat Loss">Fat Loss</option>
                             <option value="Weight Gain">Weight Gain</option>
