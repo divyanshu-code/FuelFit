@@ -40,5 +40,27 @@ const uploadprofile = async (req, res) => {
   }
 };
 
+// update profile information 
 
-export { profile, uploadprofile };
+const updateUserProfile = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const updates = req.body;  
+
+    const updatedUser = await userModel.findByIdAndUpdate(
+      userId,
+      updates,
+      { new: true }
+    );
+
+    if (!updatedUser)
+      return res.status(404).json({ success: false, message: "User not found" });
+
+    res.status(200).json({ success: true ,message: "Profile updated", user: updatedUser });
+  } catch (error) {
+    console.error("Update Error:", error);
+    res.status(500).json({success: false, message: "Server error" });
+  }
+};
+
+export { profile, uploadprofile , updateUserProfile };

@@ -1,5 +1,5 @@
 import express from 'express'
-import { profile , uploadprofile } from '../Controllers/ProfileController.js';
+import { profile , uploadprofile , updateUserProfile } from '../Controllers/ProfileController.js';
 import { verifyToken } from '../MiddleWare/authMiddleware.js';
 import multer from 'multer'
 
@@ -14,6 +14,7 @@ const upload = multer({ storage });
 
 profileRouter.get('/userdata/:id',verifyToken ,profile)
 profileRouter.post('/upload/:userId' , verifyToken  , upload.single("profileImage") , uploadprofile)
+profileRouter.put("/profileupdate/:userId" , updateUserProfile);
 
 
 export default profileRouter;
