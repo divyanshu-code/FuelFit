@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../assets/FuelFit.png'
+import logo from '../assets/Fuelfit.png'
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 
