@@ -4,7 +4,7 @@ export const storedata = createContext();
 
 const DataContext = ({children}) => {
 
-  const url = "http://localhost:4000";
+  const url = "https://fuelfit.onrender.com";
   const [token, settoken] = useState("");
 
   return (
