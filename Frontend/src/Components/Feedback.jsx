@@ -27,7 +27,6 @@ const Feedback = ({ Closeref, setOpenFeedback }) => {
 
         <form className="flex flex-col gap-4 text-black ">
 
-
           <input
             type="text"
             placeholder="Your Name"

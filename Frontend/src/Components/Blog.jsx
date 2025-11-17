@@ -71,10 +71,10 @@ const blogs = [
 const Blog = () => {
   return (
     <div
-      className="h-[70vh] scroll-mt-35 mb-60 bg-green-400 py-5 px-15 m-25 mx-40 rounded-lg  overflow-hidden"
+      className="h-[80vh] lg:h-[70vh] lg:w-[79vw] w-full scroll-mt-35 mt-40 mb-60 bg-green-400 py-5 lg:px-15 lg:m-25  lg:mx-40 lg:rounded-lg  overflow-hidden"
       id="blog"
     >
-      <h1 className="text-3xl md:text-2xl font-serif font-bold text-shadow-white text-black mb-10">
+      <h1 className="text-2xl md:text-2xl lg:text-left text-center font-serif font-bold text-shadow-white text-black mb-10">
         Do you know ?
         <hr className="mt-1 font-extrabold" />
       </h1>
@@ -86,14 +86,14 @@ const Blog = () => {
           {blogs.map((blog) => (
             <div key={blog.id} className="blog-card">
               <img src={blog.image} alt={blog.title} />
-              <div className="content">
+              <div className="content leading-tight lg:leading-5">
                 <h2>{blog.title}</h2>
                 <p>{blog.description}</p>
               </div>
               <a href={blog.Link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 text-sm font-light mt-1 ml-4">
+                className="text-blue-500 text-sm font-light lg:mt-1 ml-4">
                 Read More
               </a>
             </div>

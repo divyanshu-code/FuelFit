@@ -60,8 +60,10 @@ const Profile = () => {
 
           <ProfileBanner user={User} bmi={bmi} bmiStatus={bmiStatus} />
 
-
+          <div className='mt-30'>
           <Nutrition/>
+
+          </div>
 
           <BMI/>
 

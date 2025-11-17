@@ -136,7 +136,7 @@ const Footer = ({ setlogin }) => {
       </div>
 
       <div className="mt-12 border-t border-green-400 pt-6 text-center text-gray-200 text-sm">
-        © {new Date().getFullYear()} FuelFit. All rights reserved.
+       Copyright © {new Date().getFullYear()} FuelFit | All rights reserved.
       </div>
     </footer>
   );

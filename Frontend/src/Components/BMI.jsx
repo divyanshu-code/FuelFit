@@ -1,3 +1,4 @@
+// Fully responsive BMI Component
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -9,7 +10,6 @@ const BMI = () => {
     const [message, setMessage] = useState("");
 
     const calculateBMI = () => {
-
         if (!height || !weight) {
             setMessage("Height and weight cannot be empty!");
             setBmi(null);
@@ -20,16 +20,15 @@ const BMI = () => {
             setMessage("Height must be a positive number!");
             setBmi(null);
             return;
-        }else if (weight <= 0 && height > 0) {
+        } else if (weight <= 0 && height > 0) {
             setMessage("Weight must be a positive number!");
             setBmi(null);
             return;
-        }else if (height <= 0 && weight <= 0) {
+        } else if (height <= 0 && weight <= 0) {
             setMessage("Height and Weight must be positive numbers!");
             setBmi(null);
             return;
         }
-
 
         const hInMeters = height / 100;
         const calculatedBmi = (weight / (hInMeters * hInMeters)).toFixed(2);
@@ -42,25 +41,29 @@ const BMI = () => {
     };
 
     return (
-        <section id="bmi" className="py-16 h-[99vh]  mt-50 flex flex-col items-center justify-center text-center">
+        <section
+            id="bmi"
+            className="min-h-screen py-12 px-4 flex flex-col items-center justify-center text-center"
+        >
             <motion.h2
-                className="text-2xl font-bold mb-2 text-gray-800  "
+                className="text-xl sm:text-2xl font-bold mb-1 text-gray-800"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
                 Calculate Your BMI
             </motion.h2>
 
-            <p className="text-gray-600 mb-15 text-left ml-20 leading-relaxed italic">
-                BMI stands for <span className="font-bold">Body Mass Index</span>, a measure of body fat based on height and weight.
-                <ul className="list-disc list-inside">
-                    <li>Being overweight increases the risk of diseases like heart disease, diabetes, hypertension, and stroke.</li>
+            <p className="text-gray-700 mb-8 max-w-3xl text-sm sm:text-base leading-relaxed italic  text-left">
+                BMI stands for <span className="font-bold">Body Mass Index</span>, a measure of body fat based on height
+                and weight.
+                <ul className="list-disc list-inside mt-2 lg:mt-0 ">
+                    <li>Being overweight increases the risk of heart disease, diabetes, hypertension, and stroke.</li>
                     <li>Being underweight can lead to nutritional deficiencies, weak immunity, and fatigue.</li>
                 </ul>
             </p>
 
             <motion.div
-                className="bg-white p-8 rounded-md shadow-lg max-w-md w-full"
+                className="bg-white p-6 sm:p-8 rounded-md shadow-lg w-full max-w-md"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
@@ -69,7 +72,7 @@ const BMI = () => {
                         type="number"
                         required
                         placeholder="Enter your weight (kg)"
-                        className="border rounded px-3 mt-3 py-2 w-full outline-none"
+                        className="border rounded px-3 py-2 w-full outline-none"
                         value={weight}
                         onChange={(e) => setWeight(e.target.value)}
                     />
@@ -90,23 +93,20 @@ const BMI = () => {
                 </div>
 
                 {message && (
-                    <p className="mt-4 text-center text-lg font-medium text-gray-700">{message}</p>
+                    <p className="mt-2 text-center text-sm sm:text-lg font-medium text-gray-700">{message}</p>
                 )}
+
                 {bmi && (
                     <motion.div
-                        className="mt-4 p-3 rounded bg-emerald-50 border border-emerald-300"
+                        className="mt-4 p-4 rounded bg-emerald-50 border border-emerald-300"
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                     >
-                        <p className="text-xl font-semibold text-emerald-700">
-                            Your BMI: {bmi}
-                        </p>
-                        <p className="text-md text-gray-600">Status: {bmiStatus}</p>
+                        <p className="text-lg sm:text-xl font-semibold text-emerald-700">Your BMI: {bmi}</p>
+                        <p className="text-sm sm:text-md text-gray-600">Status: {bmiStatus}</p>
                     </motion.div>
                 )}
             </motion.div>
-
-
         </section>
     );
 };
