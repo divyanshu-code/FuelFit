@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
-import logo from '../assets/FuelFit.png'
+import logo from '../assets/Fuelfit.png'
 import { storedata } from '../../Context/DataContext'
 import axios from 'axios';
 import { CgProfile } from "react-icons/cg";
