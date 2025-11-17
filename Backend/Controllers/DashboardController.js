@@ -101,7 +101,6 @@ const getuserdata = async (req, res) => {
       }
     }
 
-
     let maxStreak = 0;
     let temp = 0;
 
