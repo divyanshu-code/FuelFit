@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaInstagram, FaTwitter, FaLinkedin, FaYoutube } from "react-icons/fa";
-import logo from '../assets/FuelFit.png'
+import logo from '../assets/Fuelfit.png'
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
