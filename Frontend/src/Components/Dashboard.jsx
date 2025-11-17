@@ -225,7 +225,7 @@ const Dashboard = () => {
                     <div key={meal._id} className="min-w-[150px]">
                       <img
                         className="w-96 h-24 object-cover rounded-md mb-2"
-                        src={meal.image}
+                        src={meal.image ? meal.image : "https://img.freepik.com/free-photo/buddha-bowl-dish-with-vegetables-legumes-top-view_1150-42589.jpg"}
                         alt={meal.name}
                       />
                       <h3 className="text-sm font-medium text-gray-700">{meal.name}</h3>
