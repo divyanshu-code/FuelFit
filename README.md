@@ -21,13 +21,9 @@ FuelFit helps users know exactly what to eat and when to eat so they can stay co
 ## Key Features
 FuelFit provide you these following feature :-
 - **Goal-based fitness tracking :** Set your fitness goals and let FuelFit guide your daily journey.
-
 - **Nutrition monitoring :** Track your daily meals, calories, and macros with ease.
-
 - **Personalized meal suggestions :** Receive smart, customizable meal recommendations based on your dietary preferences.
-
 - **Daily progress insight :** Visual representation through calender to help you stay on track and improve consistency.
-
 - **Secure authentication :** Fully protected user data using JWT-based auth.
 
 ## Tech Stack
