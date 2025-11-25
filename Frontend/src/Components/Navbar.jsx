@@ -7,7 +7,7 @@ const Navbar = ({ setlogin }) => {
     const [isOpen, setIsOpen] = React.useState(false);
 
     return (
-        <div className="fixed top-0 lg:w-[99vw] w-86 flex  justify-between items-center p-5 m-2 rounded-sm lg:shadow-md shadow-xl bg-white z-10">
+        <div className="fixed top-0 lg:w-[99vw] w-[95vw]  flex  justify-between items-center p-5 m-2 rounded-sm lg:shadow-md shadow-xl bg-white z-10">
 
             <a href="#home">
             <img className="lg:w-40 w-36 lg:ml-15  cursor-pointer" src={logo} alt="FuelFit" />
