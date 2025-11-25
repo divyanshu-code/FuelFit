@@ -42,7 +42,7 @@ FuelFit provide you these following feature :-
 - JWT Authentication
 
 **Tools & Deployment**
-- Render / Vercel
+- Render 
 - Git & GitHub
 - Postman
 
