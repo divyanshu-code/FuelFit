@@ -8,6 +8,8 @@ import { storedata } from '../../Context/DataContext';
 import axios from 'axios';
 import { toast, Zoom } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Loader from './Loader';
+import { Loader2 } from 'lucide-react';
 
 const LoginUser = ({ setlogin }) => {
 
@@ -16,6 +18,8 @@ const LoginUser = ({ setlogin }) => {
     const navigate = useNavigate();
 
     const [state, setState] = useState('Login');
+
+    const[loader , setloader] = useState(false);
 
     const [data, setdata] = useState({
         name: "",
@@ -33,6 +37,8 @@ const LoginUser = ({ setlogin }) => {
     const submithandler = async (e) => {
         e.preventDefault();
 
+        setloader(true);
+
         let newurl = url;
 
         if (state === 'Login') {
@@ -46,6 +52,8 @@ const LoginUser = ({ setlogin }) => {
 
             if (response.data.success) {
                 if (state === 'Sign Up') {
+
+                    setloader(false);
                     toast.success('Registration successful!', {
                         position: "top-center",
                         autoClose: 5000,
@@ -66,7 +74,6 @@ const LoginUser = ({ setlogin }) => {
                         password: ""
                     })
 
-
                     return;
                 } else {
 
@@ -74,6 +81,8 @@ const LoginUser = ({ setlogin }) => {
                     localStorage.setItem('tokens', response.data.token)
                     localStorage.setItem("userId", response.data.user._id);
                     setlogin(false)
+
+                    setloader(false);
                     toast.success('Login successful!', {
                         position: "top-center",
                         autoClose: 5000,
@@ -115,15 +124,13 @@ const LoginUser = ({ setlogin }) => {
                 theme: "colored",
                 transition: Zoom,
             });
+            setloader(false);
         }
-
     }
-
 
     return (
         <>
             <div className='fixed inset-0 flex items-center justify-center bg-black/70  p-4 bg-opacity-50 z-50' id='log'>
-
                 <form onSubmit={submithandler} className='w-[90%] max-w-sm sm:h-[55vh] flex flex-col gap-4 bg-green-50 p-6 sm:p-8 rounded-lg shadow-2xl'>
                     <div className=' flex justify-between text-black font-bold text-2xl'>
                         <h2 className='lg:ml-32  ml-[25vw]'>{state}</h2>
@@ -146,7 +153,7 @@ const LoginUser = ({ setlogin }) => {
                         </div>
                     </div>
                     <button type='submit' className='border-none font-bold hover:bg-green-600 bg-green-500 w-full rounded p-2 text-white cursor-pointer'>
-                        {state === 'Sign Up' ? 'Create account' : 'Login'}
+                       {loader ? <div className='flex items-center justify-center'> <Loader2  className='animate-spin '/> </div> : state === 'Sign Up' ? 'Create account' : 'Login'} 
                     </button>
                     <div className='flex items-start gap-2 text-xs'>
                         <input type='checkbox' required className='mt-0.5' />
