@@ -1,20 +1,20 @@
-import React, {  createContext , useState} from 'react'
+import React, { createContext, useState } from 'react'
 
 export const storedata = createContext();
 
-const DataContext = ({children}) => {
+const DataContext = ({ children }) => {
 
-  const url = "https://fuelfit.onrender.com";
+  const url = "http://localhost:4000";
   const [token, settoken] = useState("");
 
   return (
-     <>
+    <>
 
-       <storedata.Provider value={{ url, token, settoken }}>
-         {children}
-       </storedata.Provider>
-      
-     </>
+      <storedata.Provider value={{ url, token, settoken }}>
+        {children}
+      </storedata.Provider>
+
+    </>
   )
 }
 

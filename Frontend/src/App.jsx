@@ -10,6 +10,7 @@ import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FitnessDetail from './Pages/FitnessDetail'
 import ProtectedRoute from './ProtectedRoute/ProtectRoute'
+import PublicRoute from './ProtectedRoute/PublicRoute'
 import Profile from './Pages/Profile'
 import Dashboard from './Components/Dashboard'
 import Excercise from './Components/Excercise'
@@ -33,11 +34,16 @@ const App = () => {
         pauseOnHover
         theme="colored"
         transition={Zoom}
+        className="!z-[99999]"
       />
 
       {onlogin ? <LoginUser setlogin={setonlogin} /> : null}
       <Routes>
-        <Route path='/' element={<Home setlogin={setonlogin} />} />
+        <Route path='/' element={
+          <PublicRoute>
+            <Home setlogin={setonlogin} />
+          </PublicRoute>
+        } />
         <Route path='/about' element={<About />} />
         <Route path='/feature' element={<Features />} />
         <Route path='/contact' element={<Contact />} />
@@ -63,10 +69,7 @@ const App = () => {
 
         <Route path='/:username' element={
           <ProtectedRoute>
-            <div className="bg-black  h-screen flex items-center justify-center">
-
             <ProfileSetting/>
-            </div>
           </ProtectedRoute>} />
 
       </Routes>

@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { storedata } from '../../Context/DataContext';
-import { FaPen } from "react-icons/fa";
+import { FaPen, FaArrowLeft, FaCamera } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import Input from '../Components/UI/Input';
+import { motion } from 'framer-motion';
 
 const ProfileSetting = () => {
   const [image, setImage] = useState(null);
   const [profileimage, setProfileImage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -38,14 +41,20 @@ const ProfileSetting = () => {
             fitnessGoal: user.fitnessGoal,
           });
 
-          if (user.profileImage) setProfileImage(`${url}${user.profileImage}`);
+          if (user.profileImage) {
+            if (user.profileImage.startsWith('http')) {
+              setProfileImage(user.profileImage);
+            } else {
+              setProfileImage(`${url}${user.profileImage}`);
+            }
+          }
         }
       } catch (err) {
         console.error(err);
       }
     };
     fetchProfileImage();
-  }, []);
+  }, [url, userId, tokens]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,13 +62,14 @@ const ProfileSetting = () => {
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
+    if (!file) return;
     setImage(file);
 
-    const formData = new FormData();
-    formData.append("profileImage", file);
+    const uploadData = new FormData();
+    uploadData.append("profileImage", file);
 
     try {
-      const res = await axios.post(url + `/profile/upload/${userId}`, formData, {
+      const res = await axios.post(url + `/profile/upload/${userId}`, uploadData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `bearer ${tokens}`,
@@ -67,8 +77,15 @@ const ProfileSetting = () => {
       });
 
       if (res.data.success) {
-        setProfileImage(`${url}${res.data.imageUrl}`);
+        const imageUrl = res.data.imageUrl;
+        if (imageUrl.startsWith('http')) {
+          setProfileImage(imageUrl);
+        } else {
+          setProfileImage(`${url}${imageUrl}`);
+        }
         toast.success("Profile photo updated!");
+      } else {
+        toast.error(res.data.message || "Failed to upload image");
       }
     } catch (error) {
       console.error("Upload failed", error);
@@ -78,6 +95,7 @@ const ProfileSetting = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       const res = await axios.put(url + `/profile/profileupdate/${userId}`, formData, {
         headers: { Authorization: `bearer ${tokens}` },
@@ -85,116 +103,168 @@ const ProfileSetting = () => {
 
       if (res.data.success) {
         toast.success("Profile updated successfully!");
-        setTimeout(() => navigate("/profile"), 1200);
+        setTimeout(() => navigate("/profile"), 1000);
+      } else {
+        toast.error(res.data.message || "Failed to update profile");
+        setIsSubmitting(false);
       }
     } catch (error) {
       console.error(error);
       toast.error("Failed to update profile");
+      setIsSubmitting(false);
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, staggerChildren: 0.1 } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+  };
+
   return (
-    <div className="bg-[#1E1F22] text-white p-6 lg:rounded-xl w-full  max-w-5xl mx-auto mt-20 lg:mt-6">
-      <h2 className="text-2xl font-bold mb-6">Personal Information</h2>
+    <div className="min-h-screen font-body relative overflow-hidden bg-slate-900 flex flex-col">
+      {/* Decorative Orbs to replace mesh */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-brandGreen-500/20 rounded-full blur-[120px] pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brandOrange-500/20 rounded-full blur-[120px] pointer-events-none translate-x-1/2 translate-y-1/2"></div>
 
-      <div className="flex flex-col lg:flex-row items-start justify-between gap-10">
-
-
-        <div className="flex items-center gap-4 mb-4 mt-2">
-          <label htmlFor="image-upload" className="relative cursor-pointer group">
-            <img
-              src={image ? URL.createObjectURL(image) : profileimage || "https://cdn-icons-png.freepik.com/512/4159/4159471.png"}
-              className="w-24 h-24 rounded-full object-cover border-2 border-gray-700"
-              alt="profile"
-            />
-
-         
-            <FaPen
-              size={20}
-              className="absolute top-10 right-10 opacity-0 group-hover:opacity-100 transition  rounded-full"
-            />
-          </label>
-          <input type="file" id="image-upload" className="hidden" onChange={handleImageUpload} />
-
-          <div className='flex flex-col text-sm'>
-            <p className='font-semibold'>Profile Photo</p>
-            <p className='text-xs text-gray-400'>PNG, JPG or JPEG (Max. 1MB)</p>
+      {/* Top Navbar */}
+      <div className="w-full h-20 bg-white/10 backdrop-blur-xl border-b border-white/20 px-6 md:px-12 flex items-center justify-between relative z-50">
+        <button onClick={() => navigate('/profile')} className="flex items-center gap-3 cursor-pointer text-white/80 hover:text-white transition-colors group focus:outline-none">
+          <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all border border-white/10">
+            <FaArrowLeft />
           </div>
-        </div>
+          <span className="font-display font-bold text-lg hidden sm:block">Back to Profile</span>
+        </button>
+      </div>
 
+      <div className="flex-1 w-full max-w-6xl mx-auto px-4 md:px-8 py-12 flex items-center justify-center relative z-10">
 
-        <form className="space-y-4 w-full lg:w-[50%]" onSubmit={handleSubmit}>
-          <div>
-            <label className="font-semibold text-sm">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full mt-1 bg-zinc-600 outline-none rounded-lg px-3 py-2"
-            />
-          </div>
+        <motion.div
+          className="w-full bg-white/40 backdrop-blur-2xl border border-white/40 shadow-soft rounded-[2rem] overflow-hidden flex flex-col md:flex-row"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+        >
+          {/* Left Panel: Photo Upload */}
+          <div className="w-full md:w-1/3 bg-black/20 p-10 flex flex-col items-center justify-center text-center relative overflow-hidden">
+            {/* Decorative glows */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-brandGreen-500/30 blur-[60px] pointer-events-none rounded-full"></div>
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-brandOrange-500/30 blur-[60px] pointer-events-none rounded-full"></div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="font-semibold text-sm">Age</label>
-              <input
-                type="number"
-                name="age"
-                value={formData.age}
-                onChange={handleChange}
-                className="w-full mt-1 bg-zinc-600 outline-none rounded-lg px-3 py-2"
-              />
-            </div>
+            <motion.div variants={itemVariants} className="relative group mb-6">
+              <div className="absolute inset-0 bg-gradient-to-tr from-brandGreen-500 to-brandOrange-500 rounded-full blur-md opacity-40 group-hover:opacity-70 transition-opacity duration-300"></div>
+              <label htmlFor="image-upload" className="relative cursor-pointer block w-40 h-40 rounded-full p-1 bg-white/20 backdrop-blur-sm shadow-xl transition-transform duration-300 group-hover:scale-105 overflow-hidden">
+                <img
+                  src={image ? URL.createObjectURL(image) : profileimage || "https://cdn-icons-png.freepik.com/512/4159/4159471.png"}
+                  className="w-full h-full rounded-full object-cover border-4 border-transparent"
+                  alt="profile"
+                />
+                <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                  <FaCamera size={32} className="text-white" />
+                </div>
+              </label>
+              <input type="file" id="image-upload" className="hidden" accept="image/*" onChange={handleImageUpload} />
+            </motion.div>
 
-            <div>
-              <label className="font-semibold text-sm">Fitness Goal</label>
-              <select
-                name="fitnessGoal"
-                value={formData.fitnessGoal}
-                onChange={handleChange}
-                className="w-full mt-1 bg-zinc-600 outline-none rounded-lg px-3 py-2"
-              >
-                <option value="">Select</option>
-                <option value="Stay Fit">Stay Fit</option>
-                <option value="Muscle Gain">Muscle Gain</option>
-                <option value="Fat Loss">Fat Loss</option>
-                <option value="Weight Gain">Weight Gain</option>
-              </select>
-            </div>
+            <motion.div variants={itemVariants}>
+              <h2 className="text-2xl font-display font-bold text-white mb-2">Profile Photo</h2>
+              <p className="text-white/60 text-sm">PNG, JPG or JPEG (Max 1MB)</p>
+            </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="font-semibold text-sm">Weight (kg)</label>
-              <input
-                type="number"
-                name="weight"
-                value={formData.weight}
-                onChange={handleChange}
-                className="w-full mt-1 bg-zinc-600 outline-none rounded-lg px-3 py-2"
-              />
-            </div>
+          {/* Right Panel: Form Settings */}
+          <div className="w-full md:w-2/3 p-8 md:p-12 relative z-10">
+            <motion.h2 variants={itemVariants} className="text-3xl font-display font-bold text-white mb-8 border-b border-white/10 pb-4">
+              Personal Information
+            </motion.h2>
 
-            <div>
-              <label className="font-semibold text-sm">Height (cm)</label>
-              <input
-                type="number"
-                name="height"
-                value={formData.height}
-                onChange={handleChange}
-                className="w-full mt-1 bg-zinc-600 outline-none rounded-lg px-3 py-2"
-              />
-            </div>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <motion.div variants={itemVariants}>
+                <label className="font-bold text-sm text-white/70 mb-2 block uppercase tracking-wider">Full Name</label>
+                <Input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20"
+                  required
+                />
+              </motion.div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <motion.div variants={itemVariants}>
+                  <label className="font-bold text-sm text-white/70 mb-2 block uppercase tracking-wider">Age</label>
+                  <Input
+                    type="number"
+                    name="age"
+                    value={formData.age}
+                    onChange={handleChange}
+                    className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20"
+                    required
+                  />
+                </motion.div>
+
+                <motion.div variants={itemVariants}>
+                  <label className="font-bold text-sm text-white/70 mb-2 block uppercase tracking-wider">Fitness Goal</label>
+                  <select
+                    name="fitnessGoal"
+                    value={formData.fitnessGoal}
+                    onChange={handleChange}
+                    required
+                    className="w-full h-[46px] px-4 bg-slate-800/50 border border-white/20 focus:bg-slate-800/80 focus:border-brandGreen-500 focus:ring-1 focus:ring-brandGreen-500 rounded-lg outline-none text-white text-sm font-body transition-all"
+                  >
+                    <option value="" disabled>Select Goal</option>
+                    <option value="Stay Fit">Stay Fit</option>
+                    <option value="Muscle Gain">Muscle Gain</option>
+                    <option value="Fat Loss">Fat Loss</option>
+                    <option value="Weight Gain">Weight Gain</option>
+                  </select>
+                </motion.div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <motion.div variants={itemVariants}>
+                  <label className="font-bold text-sm text-white/70 mb-2 block uppercase tracking-wider">Weight (kg)</label>
+                  <Input
+                    type="number"
+                    name="weight"
+                    value={formData.weight}
+                    onChange={handleChange}
+                    className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20"
+                    required
+                  />
+                </motion.div>
+
+                <motion.div variants={itemVariants}>
+                  <label className="font-bold text-sm text-white/70 mb-2 block uppercase tracking-wider">Height (cm)</label>
+                  <Input
+                    type="number"
+                    name="height"
+                    value={formData.height}
+                    onChange={handleChange}
+                    className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20"
+                    required
+                  />
+                </motion.div>
+              </div>
+
+              <motion.div variants={itemVariants} className="pt-6">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto px-8 py-3 rounded-xl border bg-gradient-to-r from-brandGreen-500 to-brandGreen-600 text-white font-bold font-display shadow-[0_4px_15px_rgba(34,197,94,0.3] cursor-pointer hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Saving...' : 'Save Changes'}
+                </button>
+              </motion.div>
+            </form>
           </div>
+        </motion.div>
 
-          <button
-            type="submit"
-            className="bg-green-600 text-white px-5 py-2 rounded-md font-semibold cursor-pointer mt-5 hover:bg-green-700 transition"
-          >
-            Save Changes
-          </button>
-        </form>
       </div>
     </div>
   );
