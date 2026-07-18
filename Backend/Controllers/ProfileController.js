@@ -17,7 +17,7 @@ const profile = async (req, res) => {
 const uploadprofile = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+    const imagePath = req.file ? req.file.path : null;
 
     if (!imagePath) {
       return res.status(400).json({ success: false, message: "No image uploaded" });

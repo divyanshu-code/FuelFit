@@ -41,27 +41,49 @@ const getuserdata = async (req, res) => {
 
       const url = `https://api.edamam.com/api/recipes/v2?type=public&q=${goal}&health=${diet}&app_id=${process.env.EDAMAM_APP_ID}&app_key=${process.env.EDAMAM_APP_KEY}`;
 
-      const response = await fetch(url);
-      if (!response.ok) {
-        console.log("Edamam fetch failed:", response.status, await response.text());
-        return res.status(500).json({ message: "Failed to fetch meals from Edamam" });
+      let meals = [];
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        console.log(data);
+
+
+        if (response.ok && data.hits && data.hits.length > 0) {
+          meals = data.hits.slice(0, 4).map((item, i) => ({
+            image: item.recipe.image,
+            name: item.recipe.label,
+            type: user.mealtype || "balanced",
+            mealType: ["breakfast", "lunch", "snacks", "dinner"][i % 4],
+            protein: item.recipe.totalNutrients.PROCNT?.quantity || 0,
+            carbs: item.recipe.totalNutrients.CHOCDF?.quantity || 0,
+            fat: item.recipe.totalNutrients.FAT?.quantity || 0,
+            calories: item.recipe.calories || 0,
+            water: item.recipe.totalNutrients.WATER?.quantity || 0,
+          }));
+        } else {
+          throw new Error("Edamam API failed or no hits");
+        }
+      } catch (err) {
+        console.log("Using fallback meals:", err.message);
+        const fallbacks = [
+          { name: "Oatmeal with Berries", img: "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=500&q=80" },
+          { name: "Grilled Chicken Salad", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80" },
+          { name: "Protein Smoothie", img: "https://images.unsplash.com/photo-1553530666-ba11a7dc24fa?w=500&q=80" },
+          { name: "Baked Salmon", img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&q=80" }
+        ];
+        meals = fallbacks.map((f, i) => ({
+          image: f.img,
+          name: f.name,
+          type: user.mealtype || "balanced",
+          mealType: ["breakfast", "lunch", "snacks", "dinner"][i],
+          protein: 25,
+          carbs: 45,
+          fat: 15,
+          calories: 400,
+          water: 100,
+        }));
       }
-
-      const data = await response.json();
-      if (!data.hits || data.hits.length === 0)
-        return res.status(404).json({ message: "No meals found from API" });
-
-      const meals = data.hits.slice(0, 4).map((item, i) => ({
-        image: item.recipe.image,
-        name: item.recipe.label,
-        type: user.mealtype,
-        mealType: ["breakfast", "lunch", "snacks", "dinner"][i % 4],
-        protein: item.recipe.totalNutrients.PROCNT?.quantity || 0,
-        carbs: item.recipe.totalNutrients.CHOCDF?.quantity || 0,
-        fat: item.recipe.totalNutrients.FAT?.quantity || 0,
-        calories: item.recipe.calories || 0,
-        water: item.recipe.totalNutrients.WATER?.quantity || 0,
-      }));
 
       todayData = await mealModel.create({
         userId,
@@ -267,4 +289,4 @@ const getExercises = (req, res) => {
 };
 
 
-export { getuserdata, tickmeal, getExercises};
+export { getuserdata, tickmeal, getExercises };
