@@ -101,7 +101,17 @@ Authorization: Bearer <token>
 - The dashboard may fetch meal recipes from Edamam using `EDAMAM_APP_ID` and `EDAMAM_APP_KEY` environment variables. If the Edamam fetch fails, the route returns a 500 error.
 - Protected dashboard routes use the same `verifyToken` middleware and expect a JWT token in the `Authorization` header.
 
+## Feedback Routes
 
+- **POST /submit** : Submit user feedback to admin email (public)
+	- Body (JSON):
+		- `name` (string) - required
+		- `email` (string) - required, sender's email
+		- `thoughts` (string) - required, the feedback message
+		- `rating` (number) - required, out of 5
+	- Response (200): `{ success: true, message: "Feedback sent successfully." }`
+	- Errors: 400 for missing fields, 500 if Nodemailer fails or `.env` variables are missing.
 
-
-
+**Notes:**
+- This route requires `EMAIL_USER` and `EMAIL_PASS` (Gmail App Password) configured in the backend `.env` file to correctly authenticate with SMTP.
+- Feedback emails will set the `replyTo` address to the user's provided email.

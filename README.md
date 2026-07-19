@@ -1,59 +1,54 @@
 ## FuelFit – Your Personal Fitness Guide
-**FuelFit** is a full-stack fitness tracking application designed to help you stay consistent on your health journey.
-It allows users to set their fitness goals, monitor daily nutrition, track progress, and receive personalized meal suggestions based on their preferences.
+
+**FuelFit** is a full-stack fitness tracking application designed to help you stay consistent on your health journey. It allows users to set their fitness goals, monitor daily nutrition, track progress, and receive personalized meal suggestions based on their preferences.
 
 ## Inspiration Behind FuelFit
-The idea for FuelFit came from observing a common struggle in the gym — especially among beginners.
-After a workout, many new members would often ask: 
 
- **“What should I eat now?”**
+The idea for FuelFit came from observing a common struggle in the gym — especially among beginners. After a workout, many new members would often ask: 
 
- **“Is this food good for my body ?”**
+**“What should I eat now?”**
+**“Is this food good for my body?”**
 
-With so many food options available in the market, beginners easily get confused about what to eat, when to eat, and how much to eat. Seeing this confusion regularly, I thought:
+With so many food options available in the market, beginners easily get confused about what to eat, when to eat, and how much to eat. Seeing this confusion regularly, the thought was:
 
 **Why not build something that gives personalized meal suggestions based on fitness goals?**
 
-That's how **FuelFit** was born — a platform that automatically provides daily meal recommendations, tracking progress based on individual goals and preferences.
-
-FuelFit helps users know exactly what to eat and when to eat so they can stay consistent and focused on their fitness journey.
+That's how **FuelFit** was born — a platform that automatically provides daily meal recommendations and tracks progress based on individual goals and preferences. FuelFit helps users know exactly what to eat and when to eat so they can stay consistent and focused on their fitness journey.
 
 ## Key Features
-FuelFit provide you these following feature :-
-- **Goal-based fitness tracking :** Set your fitness goals and let FuelFit guide your daily journey.
-- **Nutrition monitoring :** Track your daily meals, calories, and macros with ease.
-- **Personalized meal suggestions :** Receive smart, customizable meal recommendations based on your dietary preferences.
-- **Daily progress insight :** Visual representation through calender to help you stay on track and improve consistency.
-- **Secure authentication :** Fully protected user data using JWT-based auth.
+
+FuelFit provides the following features:
+- **Goal-based fitness tracking**: Set your fitness goals and let FuelFit guide your daily journey.
+- **Nutrition monitoring**: Track your daily meals, calories, and macros with ease using the Edamam API.
+- **Personalized meal suggestions**: Receive smart, customizable meal recommendations based on your dietary preferences.
+- **Daily progress insight**: Visual representation through an interactive calendar to help you stay on track and improve consistency.
+- **Interactive AI Support & Feedback**: Built-in Chat FAQ widget and a direct email feedback system powered by Nodemailer.
+- **Secure authentication**: Fully protected user data using JWT-based auth.
+- **Premium UI/UX**: Glassmorphism aesthetic, smooth Framer Motion springs, and GSAP scroll animations.
 
 ## Tech Stack
 
-**Frontend**
-- React.js
+### Frontend
+- React.js (Vite)
 - Tailwind CSS
 - Context API 
-- Framer Motion
-- GSAP
+- Framer Motion & GSAP
+- Axios & React Router DOM
 
-**Backend**
-- Node.js
-- Express.js
-- MongoDB
+### Backend
+- Node.js & Express.js
+- MongoDB & Mongoose
 - JWT Authentication
-
-**Tools & Deployment**
-- Render 
-- Git & GitHub
-- Postman
+- Nodemailer (for Admin Feedback)
+- Cloudinary (for Profile Picture uploads)
 
 ## Quick Start
 
 ### Prerequisites
 Before you begin, ensure you have the following installed:
-- **Node.js** (v14 or higher) - [Download here](https://nodejs.org/)
-- **npm** (comes with Node.js)
-- **MongoDB** - [Download here](https://www.mongodb.com/try/download/community) or use [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (cloud option)
-- **Git** - [Download here](https://git-scm.com/)
+- **Node.js** (v18 or higher recommended)
+- **MongoDB** (Local instance or MongoDB Atlas)
+- **Git**
 
 ### Installation & Setup
 
@@ -63,67 +58,63 @@ Before you begin, ensure you have the following installed:
    cd FuelFit
    ```
 
-2. **Install Backend Dependencies**
+2. **Backend Setup**
    ```bash
-   cd backend
+   cd Backend
    npm install
    ```
-
-3. **Install Frontend Dependencies**
-   ```bash
-   cd ../frontend
-   npm install
-   ```
-
-4. **Environment Configuration**
    
-   Create a `.env` file in the `backend` directory:
-   ```bash
-   MONGO_URI=mongodb://localhost:27017/fuelfit
-   JWT_SECRET=your_jwt_secret_key_here
-   PORT=5000
-   NODE_ENV=development
+   Create a `.env` file in the `Backend` directory:
+   ```env
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   PORT=4000
+   CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+   CLOUDINARY_API_KEY=your_cloudinary_api_key
+   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+   EMAIL_USER=your_gmail_address
+   EMAIL_PASS=your_gmail_app_password
    ```
 
-   Create a `.env` file in the `frontend` directory:
+3. **Frontend Setup**
    ```bash
-   REACT_APP_API_URL=http://localhost:5000
+   cd ../Frontend
+   npm install
+   ```
+   
+   Create a `.env` file in the `Frontend` directory:
+   ```env
+   VITE_EDAMAM_APP_ID=your_edamam_app_id
+   VITE_EDAMAM_APP_KEY=your_edamam_app_key
    ```
 
-5. **Start MongoDB** (if running locally)
+### Running the Application
+
+1. **Start the Backend Server**
    ```bash
-   mongod
+   cd Backend
+   node index.js
+   # Or use nodemon if installed: nodemon index.js
    ```
+   The backend will start on `http://localhost:4000`
 
-6. **Run the Backend Server**
+2. **Start the Frontend Development Server** (in a new terminal)
    ```bash
-   cd backend
-   npm start
+   cd Frontend
+   npm run dev
    ```
-   The server will start on `http://localhost:5000`
+   The app will open at `http://localhost:5173`
 
-7. **Run the Frontend Development Server** (in a new terminal)
-   ```bash
-   cd frontend
-   npm start
-   ```
-   The app will open at `http://localhost:3000`
+## Project Structure
 
-### Building for Production
+For detailed documentation on the API endpoints and Frontend architecture, please refer to the dedicated README files in their respective folders:
+- [Backend Documentation](./Backend/README.md)
+- [Frontend Documentation](./Frontend/README.md)
 
-**Frontend Build**
-```bash
-cd frontend
-npm run build
-```
+## Troubleshooting
 
-**Backend Deployment**
-Follow the deployment guide for [Render](https://render.com/) or your preferred hosting platform.
-
-### Troubleshooting
-
-- **MongoDB Connection Error:** Ensure MongoDB is running and the `MONGO_URI` in `.env` is correct
-- **Port Already in Use:** Change the `PORT` in backend `.env` if port 5000 is unavailable
-- **CORS Issues:** Verify `REACT_APP_API_URL` matches your backend URL
+- **MongoDB Connection Error:** Ensure MongoDB is running and the `MONGO_URI` is correctly formatted in your backend `.env`.
+- **CORS Issues:** The backend uses standard CORS middleware. Ensure your frontend is running on the expected local port or update the CORS configuration in `Backend/index.js`.
+- **Emails Not Sending:** Verify that `EMAIL_USER` and `EMAIL_PASS` (16-character App Password) are set in the backend `.env`.
 
 If you like this project, please star the repository on GitHub to support future development!

@@ -46,9 +46,6 @@ const getuserdata = async (req, res) => {
         const response = await fetch(url);
         const data = await response.json();
 
-        console.log(data);
-
-
         if (response.ok && data.hits && data.hits.length > 0) {
           meals = data.hits.slice(0, 4).map((item, i) => ({
             image: item.recipe.image,
