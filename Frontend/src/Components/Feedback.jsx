@@ -1,68 +1,162 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { RxCross2 } from "react-icons/rx";
+import { FaStar, FaRegCommentDots } from "react-icons/fa";
+import { BiCheckCircle } from "react-icons/bi";
 
-const Feedback = ({ Closeref, setOpenFeedback }) => {
+const Feedback = ({ setOpenFeedback }) => {
+  const [rating, setRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSuccess(true);
+
+      // Auto close after success
+      setTimeout(() => {
+        setOpenFeedback(false);
+      }, 2000);
+    }, 1500);
+  };
+
   return (
-    <>
-        <div
-      className="fixed inset-0 z-50 bg-black/20 bg-opacity-40 backdrop-blur-xs  flex justify-center items-center"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex justify-center items-center p-4 font-body"
     >
-      <div
-        className="relative bg-green-100 w-96 rounded-xl shadow-2xl p-8 m-3 max-h-[80vh] overflow-y-auto"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className="relative bg-white w-full max-w-md rounded-3xl shadow-strong p-8 max-h-[90vh] overflow-y-auto scrollbar-hide border border-slate-100"
       >
-       
         <button
-          className="absolute cursor-pointer top-5 right-5 text-gray-600 hover:text-red-500 transition-all"
+          className="absolute top-6 right-6 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 p-2 rounded-full transition-all focus:outline-none"
           onClick={() => setOpenFeedback(false)}
-            ref={Closeref}
         >
-          <RxCross2 size={24} />
+          <RxCross2 size={20} />
         </button>
 
+        {!isSuccess ? (
+          <>
+            <div className="text-center mb-8 mt-2">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-50 text-green-500 mb-4 shadow-sm border border-green-100">
+                <FaRegCommentDots size={32} />
+              </div>
+              <h2 className="text-2xl font-display font-bold text-slate-800 mb-2">
+                We value your feedback
+              </h2>
+              <p className="text-sm text-slate-500">
+                Help us improve FuelFit by sharing your thoughts.
+              </p>
+            </div>
 
-        <h2 className="lg:text-xl text-[1.15rem]  lg:mt-3 mt-4 font-bold text-center lg:mb-5 mb-4 text-green-700">
-          We’d Love Your Feedback 💬
-        </h2>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              {/* Star Rating */}
+              <div className="flex flex-col items-center gap-2 mb-2">
+                <p className="text-xs uppercase tracking-wider font-bold text-slate-400">Rate your experience</p>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onMouseEnter={() => setHoverRating(star)}
+                      onMouseLeave={() => setHoverRating(0)}
+                      onClick={() => setRating(star)}
+                      className={`text-3xl transition-all duration-200 transform hover:scale-110 focus:outline-none ${(hoverRating || rating) >= star ? 'text-brandOrange-400' : 'text-slate-200'
+                        }`}
+                    >
+                      <FaStar />
+                    </button>
+                  ))}
+                </div>
+              </div>
 
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5 ml-1">Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Enter your name"
+                    className="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all placeholder:text-slate-400"
+                  />
+                </div>
 
-        <form className="flex flex-col gap-4 text-black ">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5 ml-1">Email</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="Enter your email"
+                    className="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all placeholder:text-slate-400"
+                  />
+                </div>
 
-          <input
-            type="text"
-            placeholder="Your Name"
-            className="p-2 rounded-md border font-mono border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
-          />
-          <input
-            type="email"
-            placeholder="Your Email"
-            className="p-2 rounded-md border font-mono  border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
-          />
-          <textarea
-            rows="4"
-            placeholder="Your Feedback..."
-            className="p-2 rounded-md border font-mono  border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 resize-none"
-          ></textarea>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5 ml-1">Your Thoughts</label>
+                  <textarea
+                    rows="4"
+                    required
+                    placeholder="Tell us what you love or what we can improve..."
+                    className="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all placeholder:text-slate-400 resize-none"
+                  ></textarea>
+                </div>
+              </div>
 
-          <div className="flex justify-between mt-4">
-            <button
-              type="submit"
-              className="bg-green-500 cursor-pointer hover:bg-green-600 text-white px-6 py-2 rounded-lg transition-all"
-            >
-              Submit
-            </button>
-            <button
-              type="button"
-              className="bg-gray-200 cursor-pointer hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg transition-all"
-                onClick={() => setOpenFeedback(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-    </>
-  )
-}
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setOpenFeedback(false)}
+                  disabled={isSubmitting}
+                  className="flex-1 py-3.5 rounded-xl font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 hover:text-slate-800 transition-colors focus:outline-none disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting || rating === 0}
+                  className="flex-1 py-3.5 rounded-xl font-bold text-white bg-slate-800 hover:bg-slate-700 shadow-lg shadow-slate-900/20 transition-all focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                >
+                  {isSubmitting ? (
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  ) : (
+                    'Send Feedback'
+                  )}
+                </button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center justify-center py-12 text-center"
+          >
+            <div className="text-green-500 mb-6">
+              <BiCheckCircle size={80} />
+            </div>
+            <h2 className="text-2xl font-display font-bold text-slate-800 mb-2">
+              Thank You!
+            </h2>
+            <p className="text-slate-500">
+              Your feedback helps us make FuelFit even better.
+            </p>
+          </motion.div>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+};
 
-export default Feedback
+export default Feedback;

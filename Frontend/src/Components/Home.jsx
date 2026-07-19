@@ -258,7 +258,7 @@ const Home = ({ setlogin }) => {
             <HeroVisual />
 
             {/* Floating Metric 1: Calories */}
-            <div className="absolute top-10 right-0 lg:right-6 z-20 animate-float" style={{ animationDelay: '0.2s' }}>
+            <div className="absolute top-10 right-0 lg:right-8 z-20 animate-float" style={{ animationDelay: '0.2s' }}>
               <div className="bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-medium flex items-center gap-2 select-none">
                 <span className="text-lg">🔥</span>
                 <div className="leading-tight text-left">
