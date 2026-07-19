@@ -1,7 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RxCross2 } from "react-icons/rx";
-import { FaRobot, FaUser } from "react-icons/fa";
+import { FaRobot, FaUser, FaPaperPlane } from "react-icons/fa";
+import axios from 'axios';
+import { storedata } from "../../Context/DataContext";
 
 const faqs = [
   {
@@ -49,7 +51,7 @@ const TypewriterText = ({ text, scrollToBottom }) => {
       if (scrollToBottom) scrollToBottom();
       if (index >= text.length) clearInterval(interval);
     }, 20); // Fast typing speed
-    
+
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text]);
@@ -62,7 +64,9 @@ const FAQSection = ({ setOpenFAQ }) => {
     { sender: 'bot', text: 'Hi there! 👋 I am the FuelFit Assistant. How can I help you today?' }
   ]);
   const [isTyping, setIsTyping] = useState(false);
+  const [customInput, setCustomInput] = useState("");
   const messagesEndRef = useRef(null);
+  const { url } = useContext(storedata);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -75,8 +79,6 @@ const FAQSection = ({ setOpenFAQ }) => {
   const handleFAQClick = (faq) => {
     // Add user message
     setMessages(prev => [...prev, { sender: 'user', text: faq.question }]);
-
-    // Simulate typing
     setIsTyping(true);
 
     setTimeout(() => {
@@ -85,13 +87,36 @@ const FAQSection = ({ setOpenFAQ }) => {
     }, 1200);
   };
 
+  const handleCustomSubmit = async (e) => {
+    e.preventDefault();
+    if (!customInput.trim()) return;
+
+    const question = customInput;
+    setMessages(prev => [...prev, { sender: 'user', text: question }]);
+    setCustomInput("");
+    setIsTyping(true);
+
+    try {
+        const response = await axios.post(`${url}/api/chat/ask`, { question });
+        if (response.data.success) {
+            setMessages(prev => [...prev, { sender: 'bot', text: response.data.answer }]);
+        } else {
+            setMessages(prev => [...prev, { sender: 'bot', text: "I'm having trouble connecting to my brain right now. Try again later!" }]);
+        }
+    } catch(err) {
+        setMessages(prev => [...prev, { sender: 'bot', text: "Sorry, I couldn't process that right now. Check your connection or try again!" }]);
+    } finally {
+        setIsTyping(false);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8, y: 20, transformOrigin: "bottom right" }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.8, y: 20 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="fixed bottom-24 right-5 lg:right-15 w-[90vw] max-w-[380px] h-[550px] max-h-[75vh] z-50 flex flex-col bg-white/80 backdrop-blur-2xl rounded-3xl shadow-strong border border-white/50 overflow-hidden font-body"
+      className="fixed bottom-29 lg:bottom-34 right-5 lg:right-15 w-[90vw] max-w-[380px] h-[550px] max-h-[75vh] z-50 flex flex-col bg-white/80 backdrop-blur-2xl rounded-3xl shadow-strong border border-white/50 overflow-hidden font-body"
     >
       {/* Chat Header */}
       <div className="bg-white border-b border-slate-200 p-4 flex items-center justify-between shrink-0 shadow-sm relative z-10">
@@ -124,7 +149,7 @@ const FAQSection = ({ setOpenFAQ }) => {
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className={`flex w-full ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex flex-col w-full ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
             >
               <div className={`flex gap-2 max-w-[85%] ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
 
@@ -134,7 +159,7 @@ const FAQSection = ({ setOpenFAQ }) => {
                 </div>
 
                 {/* Bubble */}
-                <div className={`p-3 rounded-2xl text-sm shadow-sm border ${msg.sender === 'user'
+                <div className={`p-3 rounded-2xl text-sm shadow-sm border whitespace-pre-wrap ${msg.sender === 'user'
                   ? 'bg-slate-800 text-white border-slate-700 rounded-br-sm'
                   : 'bg-white text-slate-800 border-slate-200 rounded-bl-sm'
                   }`}>
@@ -145,6 +170,25 @@ const FAQSection = ({ setOpenFAQ }) => {
                   )}
                 </div>
               </div>
+
+              {/* Render Quick Replies ONLY directly after the very first welcome message */}
+              {idx === 0 && msg.sender === 'bot' && (
+                <div className="flex flex-col gap-2 mt-2 ml-10">
+                  <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-1 px-1">Suggested Questions</p>
+                  <div className="flex flex-wrap gap-2">
+                    {faqs.map((faq, faqIdx) => (
+                      <button
+                        key={faqIdx}
+                        onClick={() => handleFAQClick(faq)}
+                        disabled={isTyping}
+                        className="text-left bg-brandGreen-50 hover:bg-brandGreen-100 border border-brandGreen-200 text-brandGreen-700 text-xs py-2 px-3 rounded-xl transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {faq.question}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </motion.div>
           ))}
 
@@ -172,22 +216,23 @@ const FAQSection = ({ setOpenFAQ }) => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Quick Replies (Suggested FAQs) */}
-      <div className="p-3 bg-white/60 border-t border-white/40 shrink-0">
-        <p className="text-[10px] uppercase tracking-wider font-bold text-text-muted mb-2 px-1">Suggested Questions</p>
-        <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide snap-x">
-          {faqs.map((faq, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleFAQClick(faq)}
-              disabled={isTyping}
-              className="snap-start shrink-0 whitespace-nowrap bg-brandGreen-50 hover:bg-brandGreen-100 border border-brandGreen-200 text-brandGreen-700 text-xs py-2 px-4 rounded-full transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {faq.question}
-            </button>
-          ))}
-        </div>
-      </div>
+      {/* Custom Input Field */}
+      <form onSubmit={handleCustomSubmit} className="p-3 bg-white/60 border-t border-slate-200 shrink-0 flex gap-2 items-center relative z-10 backdrop-blur-md">
+        <input
+          type="text"
+          value={customInput}
+          onChange={(e) => setCustomInput(e.target.value)}
+          placeholder="Ask a question..."
+          className="flex-1 bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-full px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brandGreen-400 placeholder:text-slate-400"
+        />
+        <button
+          type="submit"
+          disabled={!customInput.trim() || isTyping}
+          className="w-10 h-10 shrink-0 bg-slate-800 hover:bg-slate-700 text-white rounded-full flex items-center justify-center transition-colors focus:outline-none disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed"
+        >
+          <FaPaperPlane size={14} className="mr-0.5 mt-0.5" />
+        </button>
+      </form>
     </motion.div>
   );
 };

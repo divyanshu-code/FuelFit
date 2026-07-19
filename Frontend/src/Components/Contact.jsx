@@ -19,7 +19,7 @@ const Footer = ({ setlogin }) => {
 
   return (
     <>
-      <footer className="relative overflow-hidden bg-slate-900/95 backdrop-blur-xl border-t border-white/10 text-white pt-24 pb-12 px-6 md:px-16 font-body shadow-[0_-10px_40px_rgba(0,0,0,0.1)] mt-20" id="contact">
+      <footer className="relative overflow-hidden bg-slate-900/95 backdrop-blur-xl border-t border-white/10 text-white pt-24 pb-8 px-6 md:px-16 font-body shadow-[0_-10px_40px_rgba(0,0,0,0.1)] mt-20" id="contact">
 
         {/* Decorative Orbs inside Footer */}
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-brandGreen-500/20 rounded-full blur-[120px] pointer-events-none"></div>
@@ -86,7 +86,7 @@ const Footer = ({ setlogin }) => {
         </div>
 
         {/* Copyright Bar */}
-        <div className="mt-16 pt-8 border-t border-white/10 text-center text-white/50 text-sm max-w-7xl mx-auto relative z-10">
+        <div className="mt-8 pt-7 border-t border-white/10 text-center text-white/50 text-sm max-w-7xl mx-auto relative z-10">
           Copyright © {new Date().getFullYear()} FuelFit | All rights reserved.
         </div>
       </footer>
@@ -97,7 +97,7 @@ const Footer = ({ setlogin }) => {
       <button
         aria-label="FAQ"
         onClick={() => setOpenFAQ(!openFAQ)}
-        className="group fixed lg:bottom-8 right-6 bottom-10 lg:right-16 w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30 cursor-pointer shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 z-40"
+        className="group fixed lg:bottom-10 right-6 bottom-7 lg:right-16 w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30 cursor-pointer shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 z-40"
       >
         <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-slate-400"></div>
         <FaCommentDots size={26} className="text-white relative z-10 group-hover:-translate-y-0.5 transition-transform duration-300" />
