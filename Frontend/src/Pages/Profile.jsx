@@ -20,6 +20,11 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!token || !userId) {
+        navigate('/');
+        return;
+      }
+
       try {
         const response = await axios.get(`${url}/profile/userdata/${userId}`, {
           headers: {

@@ -10,6 +10,7 @@ import { gsap } from "gsap";
 import { RxCross2 } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast, Zoom } from 'react-toastify';
 
 const ProfileNavbar = ({ user }) => {
     const { url, settoken, token } = useContext(storedata);
@@ -52,6 +53,9 @@ const ProfileNavbar = ({ user }) => {
         localStorage.removeItem('userId');
         localStorage.removeItem('fitnessGoal');
         if (settoken) settoken("");
+        toast.success("Logged out successfully!", {
+            transition: Zoom,
+        });
         navigate('/');
     }
 

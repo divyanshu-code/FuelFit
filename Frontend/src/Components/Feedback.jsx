@@ -3,27 +3,46 @@ import { motion } from 'framer-motion';
 import { RxCross2 } from "react-icons/rx";
 import { FaStar, FaRegCommentDots } from "react-icons/fa";
 import { BiCheckCircle } from "react-icons/bi";
+import axios from "axios";
 
 const Feedback = ({ setOpenFeedback }) => {
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+  const [formData, setFormData] = useState({ name: '', email: '', thoughts: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMsg("");
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const response = await axios.post("http://localhost:4000/api/feedback/submit", {
+        ...formData,
+        rating
+      });
+
+      if (response.data.success) {
+        setIsSuccess(true);
+        setTimeout(() => {
+          setOpenFeedback(false);
+        }, 2000);
+      } else {
+        setErrorMsg(response.data.message || "Failed to send feedback.");
+      }
+    } catch (error) {
+      console.error("Feedback error:", error);
+      setErrorMsg("An error occurred while sending feedback. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-
-      // Auto close after success
-      setTimeout(() => {
-        setOpenFeedback(false);
-      }, 2000);
-    }, 1500);
+    }
   };
 
   return (
@@ -59,6 +78,7 @@ const Feedback = ({ setOpenFeedback }) => {
               <p className="text-sm text-slate-500">
                 Help us improve FuelFit by sharing your thoughts.
               </p>
+              {errorMsg && <p className="text-sm text-red-500 mt-3">{errorMsg}</p>}
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -87,6 +107,9 @@ const Feedback = ({ setOpenFeedback }) => {
                   <label className="block text-xs font-bold text-slate-500 mb-1.5 ml-1">Name</label>
                   <input
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     required
                     placeholder="Enter your name"
                     className="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all placeholder:text-slate-400"
@@ -97,6 +120,9 @@ const Feedback = ({ setOpenFeedback }) => {
                   <label className="block text-xs font-bold text-slate-500 mb-1.5 ml-1">Email</label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     required
                     placeholder="Enter your email"
                     className="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all placeholder:text-slate-400"
@@ -106,6 +132,9 @@ const Feedback = ({ setOpenFeedback }) => {
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5 ml-1">Your Thoughts</label>
                   <textarea
+                    name="thoughts"
+                    value={formData.thoughts}
+                    onChange={handleInputChange}
                     rows="4"
                     required
                     placeholder="Tell us what you love or what we can improve..."
