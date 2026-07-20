@@ -4,7 +4,7 @@ export const storedata = createContext();
 
 const DataContext = ({ children }) => {
 
-  const url = "http://localhost:4000";
+  const url = "https://fuelfit-backend.onrender.com";   // "http://localhost:4000"  isliye comment kiya hai kyun ki backend onrender.com par deployed hai
   const [token, settoken] = useState("");
 
   return (
