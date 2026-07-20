@@ -97,16 +97,16 @@ const FAQSection = ({ setOpenFAQ }) => {
     setIsTyping(true);
 
     try {
-        const response = await axios.post(`${url}/api/chat/ask`, { question });
-        if (response.data.success) {
-            setMessages(prev => [...prev, { sender: 'bot', text: response.data.answer }]);
-        } else {
-            setMessages(prev => [...prev, { sender: 'bot', text: "I'm having trouble connecting to my brain right now. Try again later!" }]);
-        }
-    } catch(err) {
-        setMessages(prev => [...prev, { sender: 'bot', text: "Sorry, I couldn't process that right now. Check your connection or try again!" }]);
+      const response = await axios.post(`${url}/api/chat/ask`, { question });
+      if (response.data.success) {
+        setMessages(prev => [...prev, { sender: 'bot', text: response.data.answer }]);
+      } else {
+        setMessages(prev => [...prev, { sender: 'bot', text: "I'm having trouble connecting to my brain right now. Try again later!" }]);
+      }
+    } catch (err) {
+      setMessages(prev => [...prev, { sender: 'bot', text: "Sorry, I couldn't process that right now. Check your connection or try again!" }]);
     } finally {
-        setIsTyping(false);
+      setIsTyping(false);
     }
   };
 
@@ -116,7 +116,7 @@ const FAQSection = ({ setOpenFAQ }) => {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.8, y: 20 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="fixed bottom-29 lg:bottom-34 right-5 lg:right-15 w-[90vw] max-w-[380px] h-[550px] max-h-[75vh] z-50 flex flex-col bg-white/80 backdrop-blur-2xl rounded-3xl shadow-strong border border-white/50 overflow-hidden font-body"
+      className="fixed bottom-29 lg:bottom-32 right-5 lg:right-15 w-[90vw] max-w-[380px] h-[550px] max-h-[75vh] z-50 flex flex-col bg-white/80 backdrop-blur-2xl rounded-3xl shadow-strong border border-white/50 overflow-hidden font-body"
     >
       {/* Chat Header */}
       <div className="bg-white border-b border-slate-200 p-4 flex items-center justify-between shrink-0 shadow-sm relative z-10">

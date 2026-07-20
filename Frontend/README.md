@@ -44,8 +44,10 @@ The application is structured into clearly separated pages and reusable componen
   - **Help / Progress**: Visualizes the user's historical progress and consistency.
 
 ### 4. Interactive Global Components
-- **FAQ Chat Widget (`FAQSection.jsx`)**
-  - A floating chat bubble that opens an interactive, AI-styled FAQ widget.
+- **AI FAQ Chat Widget (`FAQSection.jsx`)**
+  - A floating chat bubble that opens an interactive, intelligent FAQ widget.
+  - Powered by a Retrieval-Augmented Generation (RAG) backend using Pinecone, Google Gemini, and Groq LLMs.
+  - Users can type custom fitness/app-related questions and receive context-aware, formatting-rich AI responses.
   - Features a custom `Typewriter` effect and bouncing "thinking" dots for a highly engaging user experience.
 - **Feedback Modal (`Feedback.jsx`)**
   - A premium modal featuring a 5-star interactive rating system.

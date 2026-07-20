@@ -22,7 +22,8 @@ FuelFit provides the following features:
 - **Nutrition monitoring**: Track your daily meals, calories, and macros with ease using the Edamam API.
 - **Personalized meal suggestions**: Receive smart, customizable meal recommendations based on your dietary preferences.
 - **Daily progress insight**: Visual representation through an interactive calendar to help you stay on track and improve consistency.
-- **Interactive AI Support & Feedback**: Built-in Chat FAQ widget and a direct email feedback system powered by Nodemailer.
+- **Interactive AI Assistant (RAG)**: A smart, context-aware FAQ chatbot powered by Pinecone, Google Gemini (embeddings), and Groq (LLM).
+- **Admin Feedback System**: Direct email feedback functionality powered by Nodemailer.
 - **Secure authentication**: Fully protected user data using JWT-based auth.
 - **Premium UI/UX**: Glassmorphism aesthetic, smooth Framer Motion springs, and GSAP scroll animations.
 
@@ -41,6 +42,12 @@ FuelFit provides the following features:
 - JWT Authentication
 - Nodemailer (for Admin Feedback)
 - Cloudinary (for Profile Picture uploads)
+
+### AI & Data
+- Pinecone (Vector Database)
+- Google Gemini (`gemini-embedding-001`)
+- Groq (`llama-3.3-70b-versatile`)
+- pdf2json (for knowledge base chunking)
 
 ## Quick Start
 
@@ -66,14 +73,24 @@ Before you begin, ensure you have the following installed:
    
    Create a `.env` file in the `Backend` directory:
    ```env
+   # Server & Database
    MONGO_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret_key
    PORT=4000
+   
+   # Cloudinary (Profile Pictures)
    CLOUDINARY_CLOUD_NAME=your_cloudinary_name
    CLOUDINARY_API_KEY=your_cloudinary_api_key
    CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+   
+   # Nodemailer (Feedback)
    EMAIL_USER=your_gmail_address
    EMAIL_PASS=your_gmail_app_password
+   
+   # RAG Chatbot (AI & Vector DB)
+   VITE_PINECONE_API_KEY=your_pinecone_api_key
+   VITE_GOOGLE_API_KEY=your_google_gemini_api_key
+   VITE_GROQ_API_KEY=your_groq_api_key
    ```
 
 3. **Frontend Setup**

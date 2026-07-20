@@ -1,4 +1,3 @@
-
 # FuelFit Backend
 
 This document lists the main API route endpoints defined in the backend routes (as implemented in `Routes/UserRoute.js`). For each endpoint below you'll find the HTTP method, the route path (relative to where the router is mounted), expected request body and auth requirements.
@@ -115,3 +114,59 @@ Authorization: Bearer <token>
 **Notes:**
 - This route requires `EMAIL_USER` and `EMAIL_PASS` (Gmail App Password) configured in the backend `.env` file to correctly authenticate with SMTP.
 - Feedback emails will set the `replyTo` address to the user's provided email.
+
+## Chat Routes (RAG Assistant)
+
+- **POST /ask** : Ask a question to the FuelFit AI Assistant (public)
+	- Route Base: `/api/chat/ask`
+	- Body (JSON):
+		- `question` (string) - required, the user's typed question
+	- Response (200): `{ success: true, answer: <string> }`
+	- Errors: 400 if question is missing, 500 for server/AI service errors.
+
+**Notes:**
+- This endpoint implements a Retrieval-Augmented Generation (RAG) pipeline.
+- **Embeddings:** Uses Google Gemini (`gemini-embedding-001`) to embed the user query.
+- **Vector Search:** Queries a Pinecone vector database (`fuelfit` index, 768 dimensions) to fetch relevant chunks of the FuelFit Brand Document.
+- **LLM:** Injects the retrieved context into a prompt and calls the Groq `llama-3.3-70b-versatile` model to generate the final response.
+- Requires `.env` variables: `VITE_PINECONE_API_KEY`, `VITE_GOOGLE_API_KEY`, and `VITE_GROQ_API_KEY`.
+
+---
+
+## Setup & Development
+
+1. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Environment Variables:**
+   Create a `.env` file in the root of the `Backend` directory. You will need the following keys configured:
+   ```env
+   # Server & Database
+   PORT=4000
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+
+   # Nodemailer (Feedback Route)
+   EMAIL_USER=your_gmail_address
+   EMAIL_PASS=your_gmail_app_password
+
+   # RAG Chatbot (AI & Vector DB)
+   VITE_PINECONE_API_KEY=your_pinecone_api_key
+   VITE_GOOGLE_API_KEY=your_google_gemini_api_key
+   VITE_GROQ_API_KEY=your_groq_api_key
+   ```
+
+3. **Seeding the Pinecone Knowledge Base (Optional):**
+   If you need to re-seed the RAG system, ensure your PDF is placed in the backend directory and run:
+   ```bash
+   node scripts/seedPinecone.js
+   ```
+
+4. **Run the Server:**
+   ```bash
+   node index.js
+   # or use nodemon for auto-restarts on code changes
+   ```
+   The server will run at `http://localhost:4000`.
