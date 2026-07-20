@@ -46,7 +46,7 @@ The application is structured into clearly separated pages and reusable componen
 ### 4. Interactive Global Components
 - **AI FAQ Chat Widget (`FAQSection.jsx`)**
   - A floating chat bubble that opens an interactive, intelligent FAQ widget.
-  - Powered by a Retrieval-Augmented Generation (RAG) backend using Pinecone, Google Gemini, and Groq LLMs.
+  - Powered by a Retrieval-Augmented Generation (RAG) backend using **Pinecone, Google Gemini, and Groq** LLMs.
   - Users can type custom fitness/app-related questions and receive context-aware, formatting-rich AI responses.
   - Features a custom `Typewriter` effect and bouncing "thinking" dots for a highly engaging user experience.
 - **Feedback Modal (`Feedback.jsx`)**
