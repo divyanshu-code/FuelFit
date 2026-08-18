@@ -128,7 +128,7 @@ Authorization: Bearer <token>
 - This endpoint implements a Retrieval-Augmented Generation (RAG) pipeline.
 - **Embeddings:** Uses Google Gemini (`gemini-embedding-001`) to embed the user query.
 - **Vector Search:** Queries a Pinecone vector database (`fuelfit` index, 768 dimensions) to fetch relevant chunks of the FuelFit Brand Document.
-- **LLM:** Injects the retrieved context into a prompt and calls the Groq `llama-3.3-70b-versatile` model to generate the final response.
+- **LLM:** Injects the retrieved context into a prompt and calls the Groq `openai/gpt-oss-120b` model to generate the final response.
 - Requires `.env` variables: `VITE_PINECONE_API_KEY`, `VITE_GOOGLE_API_KEY`, and `VITE_GROQ_API_KEY`.
 
 ---

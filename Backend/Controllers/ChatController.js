@@ -59,7 +59,7 @@ ${contextText}
                 { role: "system", content: systemPrompt },
                 { role: "user", content: question }
             ],
-            model: "llama-3.3-70b-versatile",
+            model: "openai/gpt-oss-120b",
             temperature: 0.2,
             max_tokens: 250,
         });

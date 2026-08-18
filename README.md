@@ -46,7 +46,7 @@ FuelFit provides the following features:
 ### AI & Data
 - Pinecone (Vector Database)
 - Google Gemini (`gemini-embedding-001`)
-- Groq (`llama-3.3-70b-versatile`)
+- Groq (`openai/gpt-oss-120b`)
 - pdf2json (for knowledge base chunking)
 
 ## Quick Start
