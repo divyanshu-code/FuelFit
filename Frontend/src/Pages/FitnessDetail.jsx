@@ -44,7 +44,8 @@ const FitnessDetail = () => {
         fitnessGoal: '',
         gender: '',
         userId: userId,
-        mealtype: ''
+        mealtype: '',
+        allergies: []
     });
 
     const navigate = useNavigate();
@@ -54,6 +55,17 @@ const FitnessDetail = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleAllergyChange = (e) => {
+        const { value, checked } = e.target;
+        setForm(prev => {
+            if (checked) {
+                return { ...prev, allergies: [...prev.allergies, value] };
+            } else {
+                return { ...prev, allergies: prev.allergies.filter(a => a !== value) };
+            }
+        });
     };
 
     const handleSubmit = async (e) => {
@@ -91,6 +103,7 @@ const FitnessDetail = () => {
                 fitnessGoal: '',
                 gender: '',
                 mealtype: '',
+                allergies: []
             });
 
             setTimeout(() => {
@@ -118,15 +131,10 @@ const FitnessDetail = () => {
     };
 
     const logout = () => {
-        if (!token) {
-            navigate('/');
-            return;
-        };
-
         localStorage.removeItem('tokens');
         localStorage.removeItem('userId');
+        localStorage.removeItem('hasFitnessDetails');
         settoken("");
-
         navigate('/');
     }
     return (
@@ -162,7 +170,7 @@ const FitnessDetail = () => {
                         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
 
                             <motion.div variants={itemVariants}>
-                                <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Full Name</label>
+                                <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Full Name <span className="text-red-500">*</span></label>
                                 <div className="relative group flex items-center">
                                     <div className="absolute left-4 z-10 text-text-secondary transition-colors group-focus-within:text-brandGreen-500">
                                         <FaUser size={16} />
@@ -181,7 +189,7 @@ const FitnessDetail = () => {
 
                             <div className='flex flex-col sm:flex-row gap-6'>
                                 <motion.div variants={itemVariants} className="flex-1">
-                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Age</label>
+                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Age <span className="text-red-500">*</span></label>
                                     <div className="relative group flex items-center">
                                         <div className="absolute left-4 z-10 text-text-secondary transition-colors group-focus-within:text-brandGreen-500">
                                             <FaCalendarAlt size={16} />
@@ -198,7 +206,7 @@ const FitnessDetail = () => {
                                     </div>
                                 </motion.div>
                                 <motion.div variants={itemVariants} className="flex-1">
-                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Meal Preference</label>
+                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Meal Preference <span className="text-red-500">*</span></label>
                                     <div className="relative group flex items-center">
                                         <div className="absolute left-4 z-10 text-text-secondary transition-colors group-focus-within:text-brandGreen-500 pointer-events-none">
                                             <FaUtensils size={16} />
@@ -224,7 +232,7 @@ const FitnessDetail = () => {
 
                             <div className='flex flex-col sm:flex-row gap-6'>
                                 <motion.div variants={itemVariants} className="flex-1">
-                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Height</label>
+                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Height <span className="text-red-500">*</span></label>
                                     <div className="relative group flex items-center">
                                         <div className="absolute left-4 z-10 text-text-secondary transition-colors group-focus-within:text-brandGreen-500">
                                             <FaRulerVertical size={16} />
@@ -241,7 +249,7 @@ const FitnessDetail = () => {
                                     </div>
                                 </motion.div>
                                 <motion.div variants={itemVariants} className="flex-1">
-                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Weight</label>
+                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Weight <span className="text-red-500">*</span></label>
                                     <div className="relative group flex items-center">
                                         <div className="absolute left-4 z-10 text-text-secondary transition-colors group-focus-within:text-brandGreen-500">
                                             <FaWeight size={16} />
@@ -261,7 +269,7 @@ const FitnessDetail = () => {
 
                             <div className='flex flex-col sm:flex-row gap-6 mb-4'>
                                 <motion.div variants={itemVariants} className="flex-1">
-                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Primary Goal</label>
+                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Primary Goal <span className="text-red-500">*</span></label>
                                     <div className="relative group flex items-center">
                                         <div className="absolute left-4 z-10 text-text-secondary transition-colors group-focus-within:text-brandGreen-500 pointer-events-none">
                                             <FaBullseye size={16} />
@@ -285,7 +293,7 @@ const FitnessDetail = () => {
                                     </div>
                                 </motion.div>
                                 <motion.div variants={itemVariants} className="flex-1">
-                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Gender</label>
+                                    <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Gender <span className="text-red-500">*</span></label>
                                     <div className="relative group flex items-center">
                                         <div className="absolute left-4 z-10 text-text-secondary transition-colors group-focus-within:text-brandGreen-500 pointer-events-none">
                                             <FaVenusMars size={16} />
@@ -308,6 +316,24 @@ const FitnessDetail = () => {
                                     </div>
                                 </motion.div>
                             </div>
+
+                            <motion.div variants={itemVariants} className="mb-4">
+                                <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Dietary Restrictions & Allergies</label>
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 bg-white/60 backdrop-blur-sm border-white/50 rounded-xl shadow-sm">
+                                    {['peanut-free', 'dairy-free', 'gluten-free', 'soy-free', 'tree-nut-free'].map(allergy => (
+                                        <label key={allergy} className="flex items-center gap-2 cursor-pointer text-sm font-body text-text-primary capitalize">
+                                            <input
+                                                type="checkbox"
+                                                value={allergy}
+                                                checked={form.allergies.includes(allergy)}
+                                                onChange={handleAllergyChange}
+                                                className="w-4 h-4 text-brandGreen-500 rounded focus:ring-brandGreen-500 cursor-pointer accent-brandGreen-500"
+                                            />
+                                            {allergy.replace("-free", "")} Free
+                                        </label>
+                                    ))}
+                                </div>
+                            </motion.div>
 
                             <motion.div variants={itemVariants}>
                                 <Button type="submit" variant="primary" className="w-full mt-2 py-4 text-lg shadow-xl shadow-brandGreen-500/30 hover:shadow-brandGreen-500/50 hover:-translate-y-1 transition-all duration-300 border border-brandGreen-400">

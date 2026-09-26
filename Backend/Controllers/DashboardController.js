@@ -39,7 +39,13 @@ const getuserdata = async (req, res) => {
       const diet = user.mealtype?.toLowerCase() === "veg" ? "vegetarian" : "balanced";
       const goal = user.fitnessGoal?.toLowerCase() || "balanced";
 
-      const url = `https://api.edamam.com/api/recipes/v2?type=public&q=${goal}&health=${diet}&app_id=${process.env.EDAMAM_APP_ID}&app_key=${process.env.EDAMAM_APP_KEY}`;
+      let url = `https://api.edamam.com/api/recipes/v2?type=public&q=${goal}&health=${diet}&app_id=${process.env.EDAMAM_APP_ID}&app_key=${process.env.EDAMAM_APP_KEY}`;
+      
+      if (user.allergies && user.allergies.length > 0) {
+        user.allergies.forEach(allergy => {
+            url += `&health=${allergy}`;
+        });
+      }
 
       let meals = [];
       try {

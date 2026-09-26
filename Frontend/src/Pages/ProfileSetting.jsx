@@ -17,6 +17,7 @@ const ProfileSetting = () => {
     weight: "",
     height: "",
     fitnessGoal: "",
+    allergies: [],
   });
 
   const { url } = useContext(storedata);
@@ -39,6 +40,7 @@ const ProfileSetting = () => {
             weight: user.weight,
             height: user.height,
             fitnessGoal: user.fitnessGoal,
+            allergies: user.allergies || [],
           });
 
           if (user.profileImage) {
@@ -58,6 +60,17 @@ const ProfileSetting = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleAllergyChange = (e) => {
+    const { value, checked } = e.target;
+    setFormData(prev => {
+      if (checked) {
+        return { ...prev, allergies: [...prev.allergies, value] };
+      } else {
+        return { ...prev, allergies: prev.allergies.filter(a => a !== value) };
+      }
+    });
   };
 
   const handleImageUpload = async (e) => {
@@ -144,7 +157,7 @@ const ProfileSetting = () => {
       <div className="flex-1 w-full max-w-6xl mx-auto px-4 md:px-8 py-12 flex items-center justify-center relative z-10">
 
         <motion.div
-          className="w-full bg-white/40 backdrop-blur-2xl border border-white/40 shadow-soft rounded-[2rem] overflow-hidden flex flex-col md:flex-row"
+          className="w-full bg-white/10 backdrop-blur-2xl border border-white/40 shadow-soft rounded-[2rem] overflow-hidden flex flex-col md:flex-row"
           variants={containerVariants}
           initial="hidden"
           animate="show"
@@ -251,6 +264,24 @@ const ProfileSetting = () => {
                   />
                 </motion.div>
               </div>
+
+              <motion.div variants={itemVariants} className="pt-2">
+                <label className="font-bold text-sm text-white/70 mb-3 block uppercase tracking-wider">Dietary Restrictions & Allergies <span className="text-white/40 lowercase normal-case font-normal">(Optional)</span></label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {['peanut-free', 'dairy-free', 'gluten-free', 'soy-free', 'tree-nut-free'].map(allergy => (
+                    <label key={allergy} className="flex items-center gap-2 cursor-pointer text-sm font-body text-white/90 capitalize bg-white/5 border border-white/10 p-3 rounded-lg hover:bg-white/10 transition-colors">
+                      <input
+                        type="checkbox"
+                        value={allergy}
+                        checked={formData.allergies.includes(allergy)}
+                        onChange={handleAllergyChange}
+                        className="w-4 h-4 text-brandGreen-500 rounded focus:ring-brandGreen-500 cursor-pointer accent-brandGreen-500 bg-slate-800 border-white/20"
+                      />
+                      {allergy.replace("-free", "")} Free
+                    </label>
+                  ))}
+                </div>
+              </motion.div>
 
               <motion.div variants={itemVariants} className="pt-6">
                 <button
