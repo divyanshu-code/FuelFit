@@ -268,7 +268,7 @@ const ProfileSetting = () => {
               <motion.div variants={itemVariants} className="pt-2">
                 <label className="font-bold text-sm text-white/70 mb-3 block uppercase tracking-wider">Dietary Restrictions & Allergies <span className="text-white/40 lowercase normal-case font-normal">(Optional)</span></label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {['peanut-free', 'dairy-free', 'gluten-free', 'soy-free', 'tree-nut-free'].map(allergy => (
+                  {['peanut-free', 'dairy-free', 'gluten-free', 'soy-free', 'tree-nut-free', 'egg-free', 'fish-free', 'mustard-free', 'wheat-free'].map(allergy => (
                     <label key={allergy} className="flex items-center gap-2 cursor-pointer text-sm font-body text-white/90 capitalize bg-white/5 border border-white/10 p-3 rounded-lg hover:bg-white/10 transition-colors">
                       <input
                         type="checkbox"

@@ -3,12 +3,36 @@ import logo from '../assets/Fuelfit.png';
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaSun, FaMoon } from "react-icons/fa";
 import Button from './UI/Button';
 
 const Navbar = ({ setlogin }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [hoveredItem, setHoveredItem] = useState(null);
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    useEffect(() => {
+        if (document.documentElement.classList.contains('dark')) {
+            setIsDarkMode(true);
+        }
+    }, []);
+
+    const toggleTheme = () => {
+        const switchTheme = () => {
+            setIsDarkMode(prev => {
+                if (!prev) document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+                return !prev;
+            });
+        };
+
+        if (document.startViewTransition) {
+            document.startViewTransition(switchTheme);
+        } else {
+            switchTheme();
+        }
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -45,8 +69,8 @@ const Navbar = ({ setlogin }) => {
                             onMouseEnter={() => setHoveredItem(item)}
                             onMouseLeave={() => setHoveredItem(null)}
                         >
-                            <span 
-                                className="relative z-10 transition-colors duration-300" 
+                            <span
+                                className="relative z-10 transition-colors duration-300"
                                 style={{ color: hoveredItem === item ? '#2A832A' : '#4A5568' }}
                             >
                                 {item === 'Feature' ? 'Features' : item}
@@ -63,7 +87,15 @@ const Navbar = ({ setlogin }) => {
                 })}
             </nav>
 
-            <div className='flex items-center gap-3'>
+            <div className='flex items-center gap-6'>
+                <button
+                    onClick={toggleTheme}
+                    className="text-text-secondary hover:text-brandOrange-500 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-brandGreen-500 transition-colors"
+                    aria-label="Toggle Dark Mode"
+                >
+                    {isDarkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
+                </button>
+
                 <Button
                     onClick={() => setlogin(true)}
                     variant="primary"

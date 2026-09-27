@@ -211,7 +211,7 @@ const Home = ({ setlogin }) => {
           <ParticleCanvas />
 
           {/* Architectural Layout Grids */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#E2E0D9_1px,transparent_1px),linear-gradient(to_bottom,#E2E0D9_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_60%,transparent_100%)] opacity-40 pointer-events-none z-0"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-surface-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-surface-border)_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_60%,transparent_100%)] opacity-40 pointer-events-none z-0"></div>
 
           {/* Monospace Tech Labels */}
           <div className="absolute top-24 left-10 text-[10px] font-mono text-text-muted select-none hidden lg:block tracking-widest">[ SYS_ACTIVE : FUEL_FIT_V2 ]</div>
@@ -259,7 +259,7 @@ const Home = ({ setlogin }) => {
 
             {/* Floating Metric 1: Calories */}
             <div className="absolute top-10 right-0 lg:right-8 z-20 animate-float" style={{ animationDelay: '0.2s' }}>
-              <div className="bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-medium flex items-center gap-2 select-none">
+              <div className="bg-surface-card backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-medium flex items-center gap-2 select-none border border-surface-border">
                 <span className="text-lg">🔥</span>
                 <div className="leading-tight text-left">
                   <p className="text-[9px] text-text-secondary font-bold uppercase tracking-wider font-body">Burned</p>
@@ -270,7 +270,7 @@ const Home = ({ setlogin }) => {
 
             {/* Floating Metric 2: Plan Badge */}
             <div className="absolute -left-10 bottom-1/3 z-20 animate-float" style={{ animationDelay: '1.5s', animationDuration: '7s' }}>
-              <div className="bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-medium flex items-center gap-2 select-none">
+              <div className="bg-surface-card backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-medium flex items-center gap-2 select-none border border-surface-border">
                 <span className="text-lg">🥗</span>
                 <div className="leading-tight text-left">
                   <p className="text-[9px] text-text-secondary font-bold uppercase tracking-wider font-body">Keto Diet</p>
@@ -281,7 +281,7 @@ const Home = ({ setlogin }) => {
 
             {/* Floating Metric 3: Steps */}
             <div className="absolute right-0 bottom-12 z-20 animate-float" style={{ animationDelay: '0.8s', animationDuration: '5s' }}>
-              <div className="bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-medium flex items-center gap-2 select-none">
+              <div className="bg-surface-card backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-medium flex items-center gap-2 select-none border border-surface-border">
                 <span className="text-lg">🏃‍♂️</span>
                 <div className="leading-tight text-left">
                   <p className="text-[9px] text-text-secondary font-bold uppercase tracking-wider font-body">Steps Goal</p>

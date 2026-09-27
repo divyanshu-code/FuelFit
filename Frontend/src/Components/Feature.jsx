@@ -57,7 +57,7 @@ const Features = () => {
           {/* Flame Gradient Underline */}
           <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1/3 h-1.5 rounded-full bg-flame-gradient"></span>
         </h2>
-        <p className="text-gray-500 font-body text-lg md:text-xl max-w-2xl mx-auto italic  leading-relaxed">
+        <p className="text-text-secondary font-body text-lg md:text-xl max-w-2xl mx-auto italic  leading-relaxed">
           We make healthy eating easy, smart, and sustainable — all adapt to your personal goals.
         </p>
       </div>
@@ -69,7 +69,7 @@ const Features = () => {
           return (
             <div key={index} ref={(el) => (cardsRef.current[index] = el)}>
               <div
-                className={`group bg-white h-full flex flex-col items-start rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2 border border-transparent 
+                className={`group bg-surface-card h-full flex flex-col items-start rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2 border border-surface-border 
                   ${isFeatured
                     ? 'border-t-4 border-t-[#F2803D] shadow-[0_8px_30px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_40px_-4px_rgba(0,0,0,0.15)]'
                     : 'shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.12)]'

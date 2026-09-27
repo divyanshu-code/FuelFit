@@ -49,18 +49,18 @@ const DashboardSkeleton = () => (
   <div className="min-h-screen premium-bg-mesh p-4 md:p-8 lg:p-12 relative overflow-hidden font-body">
     <div className="max-w-7xl mx-auto mt-8">
       {/* Header Skeleton */}
-      <div className="h-24 w-full bg-white/30 backdrop-blur-md rounded-[2rem] mb-8 animate-pulse shadow-sm"></div>
+      <div className="h-24 w-full glass-panel backdrop-blur-md rounded-[2rem] mb-8 animate-pulse shadow-sm"></div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Main Content Skeletons */}
-          <div className="h-[400px] w-full bg-white/30 backdrop-blur-md rounded-[2rem] animate-pulse shadow-sm"></div>
-          <div className="h-[500px] w-full bg-white/30 backdrop-blur-md rounded-[2rem] animate-pulse shadow-sm"></div>
+          <div className="h-[400px] w-full glass-panel backdrop-blur-md rounded-[2rem] animate-pulse shadow-sm"></div>
+          <div className="h-[500px] w-full glass-panel backdrop-blur-md rounded-[2rem] animate-pulse shadow-sm"></div>
         </div>
         <div className="space-y-8">
           {/* Sidebar Skeletons */}
-          <div className="h-48 w-full bg-white/30 backdrop-blur-md rounded-[2rem] animate-pulse shadow-sm"></div>
-          <div className="h-96 w-full bg-white/30 backdrop-blur-md rounded-[2rem] animate-pulse shadow-sm"></div>
+          <div className="h-48 w-full glass-panel backdrop-blur-md rounded-[2rem] animate-pulse shadow-sm"></div>
+          <div className="h-96 w-full glass-panel backdrop-blur-md rounded-[2rem] animate-pulse shadow-sm"></div>
         </div>
       </div>
     </div>
@@ -242,17 +242,17 @@ const Dashboard = () => {
 
         {/* Header */}
         <motion.div variants={itemVariants} whileHover={{ y: -2 }}>
-          <Card className="flex flex-col sm:flex-row items-center justify-between mb-8 p-6 bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg">
+          <Card className="flex flex-col sm:flex-row items-center justify-between mb-8 p-6 glass-panel backdrop-blur-xl border shadow-lg">
             <div className="flex items-center justify-center gap-8 mb-4 sm:mb-0">
-              <Link to="/profile" className="absolute left-4  w-10 h-10 rounded-full bg-white/50 border border-white/60 flex items-center justify-center hover:bg-white/80 transition-all shadow-sm text-text-primary focus:outline-none">
+              <Link to="/profile" className="absolute left-4 w-10 h-10 rounded-full glass-panel border flex items-center justify-center hover:bg-surface-card transition-all shadow-sm text-text-primary focus:outline-none">
                 <span className="text-lg font-bold">←</span>
               </Link>
-              <h1 className="lg:text-2xl text-md font-display font-bold lg:ml-15  text-text-primary">
+              <h1 className="lg:text-2xl text-md font-display font-bold lg:ml-15 text-text-primary">
                 Welcome Back, <span className="text-brandGreen-500">{user?.name || "Athlete"}</span>
               </h1>
             </div>
             <Link to="/exercises">
-              <Button variant="ghost" className="hover:bg-white/60  shadow-sm">View Full Exercise Chart &rarr;</Button>
+              <Button variant="ghost" className="hover:bg-surface-alt shadow-sm">View Full Exercise Chart &rarr;</Button>
             </Link>
           </Card>
         </motion.div>
@@ -264,7 +264,7 @@ const Dashboard = () => {
 
             {/* Nutrition Dashboard Card */}
             <motion.div variants={itemVariants} whileHover={{ scale: 1.01, y: -4 }} transition={{ type: "spring", stiffness: 400 }}>
-              <Card className="p-6 md:p-8 bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg">
+              <Card className="p-6 md:p-8 glass-panel backdrop-blur-xl border shadow-lg">
                 <h2 className="text-xl font-display font-bold text-text-primary mb-6 flex items-center gap-2">
 
                   Daily Nutrition

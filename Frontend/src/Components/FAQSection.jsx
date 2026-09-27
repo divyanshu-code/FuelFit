@@ -116,10 +116,10 @@ const FAQSection = ({ setOpenFAQ }) => {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.8, y: 20 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="fixed bottom-29 lg:bottom-32 right-5 lg:right-15 w-[90vw] max-w-[380px] h-[550px] max-h-[75vh] z-50 flex flex-col bg-white/80 backdrop-blur-2xl rounded-3xl shadow-strong border border-white/50 overflow-hidden font-body"
+      className="fixed bottom-29 lg:bottom-32 right-5 lg:right-15 w-[90vw] max-w-[380px] h-[550px] max-h-[75vh] z-50 flex flex-col bg-surface-card backdrop-blur-2xl rounded-3xl shadow-strong border border-surface-border overflow-hidden font-body"
     >
       {/* Chat Header */}
-      <div className="bg-white border-b border-slate-200 p-4 flex items-center justify-between shrink-0 shadow-sm relative z-10">
+      <div className="bg-surface-card border-b border-surface-border p-4 flex items-center justify-between shrink-0 shadow-sm relative z-10">
         <div className="flex items-center gap-3">
           <div className="relative">
             <div className="w-10 h-10 bg-brandGreen-50 rounded-full flex items-center justify-center border border-brandGreen-100">
@@ -128,20 +128,20 @@ const FAQSection = ({ setOpenFAQ }) => {
             <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full shadow-sm"></div>
           </div>
           <div>
-            <h3 className="text-slate-800 font-bold text-sm tracking-wide">FuelFit Support</h3>
-            <p className="text-slate-500 text-xs">Typically replies instantly</p>
+            <h3 className="text-text-primary font-bold text-sm tracking-wide">FuelFit Support</h3>
+            <p className="text-text-secondary text-xs">Typically replies instantly</p>
           </div>
         </div>
         <button
           onClick={() => setOpenFAQ(false)}
-          className="text-slate-400 hover:text-slate-700 hover:bg-slate-100 p-2 rounded-full transition-colors focus:outline-none"
+          className="text-text-muted hover:text-text-primary hover:bg-surface-alt p-2 rounded-full transition-colors focus:outline-none"
         >
           <RxCross2 size={20} />
         </button>
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 bg-slate-50/50 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 bg-surface scrollbar-hide">
         <AnimatePresence initial={false}>
           {messages.map((msg, idx) => (
             <motion.div
@@ -160,8 +160,8 @@ const FAQSection = ({ setOpenFAQ }) => {
 
                 {/* Bubble */}
                 <div className={`p-3 rounded-2xl text-sm shadow-sm border whitespace-pre-wrap ${msg.sender === 'user'
-                  ? 'bg-slate-800 text-white border-slate-700 rounded-br-sm'
-                  : 'bg-white text-slate-800 border-slate-200 rounded-bl-sm'
+                  ? 'bg-brandOrange-500 text-white border-brandOrange-600 rounded-br-sm'
+                  : 'bg-surface-card text-text-primary border-surface-border rounded-bl-sm'
                   }`}>
                   {msg.sender === 'bot' && idx !== 0 ? (
                     <TypewriterText text={msg.text} scrollToBottom={scrollToBottom} />
@@ -174,7 +174,7 @@ const FAQSection = ({ setOpenFAQ }) => {
               {/* Render Quick Replies ONLY directly after the very first welcome message */}
               {idx === 0 && msg.sender === 'bot' && (
                 <div className="flex flex-col gap-2 mt-2 ml-10">
-                  <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-1 px-1">Suggested Questions</p>
+                  <p className="text-[10px] uppercase tracking-wider font-bold text-text-muted mb-1 px-1">Suggested Questions</p>
                   <div className="flex flex-wrap gap-2">
                     {faqs.map((faq, faqIdx) => (
                       <button
@@ -204,10 +204,10 @@ const FAQSection = ({ setOpenFAQ }) => {
                 <div className="w-8 h-8 rounded-full flex shrink-0 items-center justify-center mt-auto bg-brandGreen-100 text-brandGreen-600">
                   <FaRobot size={20} />
                 </div>
-                <div className="p-4 rounded-2xl rounded-bl-sm bg-white shadow-sm border border-slate-200 flex gap-1.5 items-center justify-center h-10 mt-auto">
-                  <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }} className="w-2 h-2 bg-slate-400 rounded-full"></motion.div>
-                  <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-2 h-2 bg-slate-400 rounded-full"></motion.div>
-                  <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-2 h-2 bg-slate-400 rounded-full"></motion.div>
+                <div className="p-4 rounded-2xl rounded-bl-sm bg-surface-card shadow-sm border border-surface-border flex gap-1.5 items-center justify-center h-10 mt-auto">
+                  <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }} className="w-2 h-2 bg-text-muted rounded-full"></motion.div>
+                  <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-2 h-2 bg-text-muted rounded-full"></motion.div>
+                  <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-2 h-2 bg-text-muted rounded-full"></motion.div>
                 </div>
               </div>
             </motion.div>
@@ -217,13 +217,13 @@ const FAQSection = ({ setOpenFAQ }) => {
       </div>
 
       {/* Custom Input Field */}
-      <form onSubmit={handleCustomSubmit} className="p-3 bg-white/60 border-t border-slate-200 shrink-0 flex gap-2 items-center relative z-10 backdrop-blur-md">
+      <form onSubmit={handleCustomSubmit} className="p-3 bg-surface-card border-t border-surface-border shrink-0 flex gap-2 items-center relative z-10 backdrop-blur-md">
         <input
           type="text"
           value={customInput}
           onChange={(e) => setCustomInput(e.target.value)}
           placeholder="Ask a question..."
-          className="flex-1 bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-full px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brandGreen-400 placeholder:text-slate-400"
+          className="flex-1 bg-surface-alt border border-surface-border text-text-primary text-sm rounded-full px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brandGreen-400 placeholder:text-text-muted"
         />
         <button
           type="submit"

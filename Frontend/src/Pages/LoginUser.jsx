@@ -147,11 +147,11 @@ const LoginUser = ({ setlogin }) => {
     }
 
     return (
-        <div className='fixed inset-0 flex items-center justify-center bg-text-primary/40 p-4 z-[100] backdrop-blur-md transition-opacity duration-300'>
+        <div className='fixed inset-0 flex items-center justify-center bg-slate-900/60 p-4 z-[100] backdrop-blur-md transition-opacity duration-300'>
             <div className="w-full max-w-md animate-[scale-in_0.2s_ease-out]">
 
 
-                <Card className="p-8 bg-white shadow-xl border border-surface-border relative">
+                <Card className="p-8 !bg-surface-card shadow-xl border border-surface-border relative">
                     <button type="button" onClick={() => setlogin(false)} className='absolute top-4 right-4 text-text-secondary hover:text-text-primary transition-colors cursor-pointer'>
                         <RxCross2 size={24} />
                     </button>

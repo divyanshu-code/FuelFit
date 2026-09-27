@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -9,16 +10,16 @@ export default {
       colors: {
         // Base surfaces
         surface: {
-          DEFAULT: '#FAF9F6', // off-white/warm cream main background
-          alt: '#F7F5F0',     // slightly darker cream
-          card: '#FFFFFF',    // pure white for cards
-          border: '#E2E0D9',  // soft neutral border tone
+          DEFAULT: 'var(--color-surface)', 
+          alt: 'var(--color-surface-alt)',     
+          card: 'var(--color-surface-card)',    
+          border: 'var(--color-surface-border)',  
         },
         // Typography
         text: {
-          primary: '#2D3748',   // Charcoal/slate for high contrast but softer than black
-          secondary: '#4A5568', // Medium slate
-          muted: '#A0AEC0',     // Light slate
+          primary: 'var(--color-text-primary)',   
+          secondary: 'var(--color-text-secondary)', 
+          muted: 'var(--color-text-muted)',     
         },
         // Brand: Leafy Green (~#3AA33A)
         brandGreen: {

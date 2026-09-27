@@ -9,6 +9,7 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from "gsap";
 import { RxCross2 } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
+import { FaSun, FaMoon } from "react-icons/fa";
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast, Zoom } from 'react-toastify';
 
@@ -18,6 +19,29 @@ const ProfileNavbar = ({ user }) => {
     const [profileimage, setProfileImage] = useState(null);
     const [open, setOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    useEffect(() => {
+        if (document.documentElement.classList.contains('dark')) {
+            setIsDarkMode(true);
+        }
+    }, []);
+
+    const toggleTheme = () => {
+        const switchTheme = () => {
+            setIsDarkMode(prev => {
+                if (!prev) document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+                return !prev;
+            });
+        };
+
+        if (document.startViewTransition) {
+            document.startViewTransition(switchTheme);
+        } else {
+            switchTheme();
+        }
+    };
 
     const drawerRef = useRef(null);
     const overlayRef = useRef(null);
@@ -96,6 +120,14 @@ const ProfileNavbar = ({ user }) => {
                 </nav>
 
                 <div className='flex items-center gap-4'>
+
+                    <button
+                        onClick={toggleTheme}
+                        className="text-text-secondary hover:text-brandOrange-500 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-brandGreen-500 transition-colors"
+                        aria-label="Toggle Dark Mode"
+                    >
+                        {isDarkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
+                    </button>
 
                     <div className='relative hidden md:block'>
                         <button

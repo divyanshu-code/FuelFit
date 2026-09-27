@@ -97,10 +97,10 @@ const Footer = ({ setlogin }) => {
       <button
         aria-label="FAQ"
         onClick={() => setOpenFAQ(!openFAQ)}
-        className="group fixed lg:bottom-10 right-6 bottom-7 lg:right-16 w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30 cursor-pointer shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 z-40"
+        className="group fixed lg:bottom-10 right-6 bottom-7 lg:right-16 w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30 cursor-pointer shadow-xl transition-all duration-300  z-40"
       >
         <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-slate-400"></div>
-        <FaCommentDots size={26} className="text-white relative z-10 group-hover:-translate-y-0.5 transition-transform duration-300" />
+        <FaCommentDots size={26} className="text-white relative z-10  transition-transform duration-300" />
       </button>
 
       {/* FAQ Chat Widget */}

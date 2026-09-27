@@ -10,7 +10,49 @@
   --toastify-color-error: #E53E3E;
   --toastify-text-color-light: #4A5568;
   --toastify-font-family: 'Plus Jakarta Sans', sans-serif;
+  
+  --color-surface: #FAF9F6;
+  --color-surface-alt: #F7F5F0;
+  --color-surface-card: #FFFFFF;
+  --color-surface-border: #E2E0D9;
+  --color-text-primary: #2D3748;
+  --color-text-secondary: #4A5568;
+  --color-text-muted: #A0AEC0;
+  
+  --color-mesh-center: rgba(254, 246, 241, 0.5);
 }
+
+.dark {
+  --color-surface: #0f172a;
+  --color-surface-alt: #1e293b;
+  --color-surface-card: #1e293b;
+  --color-surface-border: #334155;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  
+  --color-mesh-center: rgba(15, 23, 42, 0.8);
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+  animation: wipe-down 0.5s ease-out;
+}
+
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+
+@keyframes wipe-down {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
 
 * {
   box-sizing: border-box;
@@ -20,16 +62,27 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #FAF9F6;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .premium-bg-mesh {
   background-image:
     radial-gradient(at 0% 0%, rgba(242, 128, 61, 0.08) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(58, 163, 58, 0.08) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(254, 246, 241, 0.5) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, var(--color-mesh-center) 0px, transparent 50%),
     radial-gradient(at 0% 100%, rgba(58, 163, 58, 0.05) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(242, 128, 61, 0.05) 0px, transparent 50%);
+}
+
+.glass-panel {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.dark .glass-panel {
+  background-color: rgba(30, 41, 59, 0.6);
+  border-color: rgba(51, 65, 85, 0.6);
 }
 
 ::-webkit-scrollbar {
@@ -247,13 +300,14 @@ body {
 }
 
 .my-calendar {
-  background: #ffffff;
+  background: var(--color-surface-card);
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   font-family: 'Poppins', sans-serif;
   width: 100%;
   max-width: 380px;
+  color: var(--color-text-primary);
 }
 
 .my-calendar .react-calendar__tile {
@@ -270,14 +324,14 @@ body {
 }
 
 .my-calendar .react-calendar__navigation button {
-  color: #333;
+  color: var(--color-text-primary);
   font-size: 17px;
   font-weight: 600;
 
 }
 
 .my-calendar .react-calendar__navigation button:hover {
-  background: #f0f0f0;
+  background: var(--color-surface-alt);
   border-radius: 5px;
 }
 
@@ -288,7 +342,8 @@ body {
 }
 
 .my-calendar .react-calendar__tile--now {
-  background: #cdffdc;
+  background: var(--color-surface-alt);
+  color: var(--color-text-primary);
 }
 
 @media (max-width : 600px) {

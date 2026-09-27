@@ -320,7 +320,7 @@ const FitnessDetail = () => {
                             <motion.div variants={itemVariants} className="mb-4">
                                 <label className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2 block pl-1">Dietary Restrictions & Allergies</label>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 bg-white/60 backdrop-blur-sm border-white/50 rounded-xl shadow-sm">
-                                    {['peanut-free', 'dairy-free', 'gluten-free', 'soy-free', 'tree-nut-free'].map(allergy => (
+                                    {['peanut-free', 'dairy-free', 'gluten-free', 'soy-free', 'tree-nut-free', 'egg-free', 'fish-free', 'mustard-free', 'wheat-free'].map(allergy => (
                                         <label key={allergy} className="flex items-center gap-2 cursor-pointer text-sm font-body text-text-primary capitalize">
                                             <input
                                                 type="checkbox"
